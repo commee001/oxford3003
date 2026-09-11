@@ -39,7 +39,7 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white pb-16 md:pb-6">
 
-  <!-- Top Navigation Header -->
+  <!-- Header -->
   <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 px-4 py-3 sm:px-6">
     <div class="max-w-5xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('dashboard')">
@@ -114,12 +114,10 @@
             ⚡ Spaced Repetition แบบวนรอบอิสระ (เล่นซ้ำต่อเนื่องได้ทันที)
           </span>
           <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-2 leading-snug">
-            ภารกิจ: <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">ชุดละ 10 คำ (รอบทวนคำลืมอัตโนมัติ)</span>
+            ภารกิจ: <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">ชุดละ 10 คำ (ดึงคำใหม่ต่อเนื่อง)</span>
           </h2>
           <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6">
-            ❌ จำไม่ได้: โผล่มาทวนในรอบถัดไปทันที (+1 รอบ)<br>
-            🤔 เกือบจำได้: เว้นช่วงกลับมาในอีก 2–3 รอบข้างหน้า<br>
-            ✨ จำได้แม่น: ผลักไปอีก 6–7 รอบข้างหน้า
+            ระบบจัดคิวคำใหม่ขึ้นมาให้เรียนเรื่อยๆ จนกว่าจะหมดคลังคำศัพท์ พร้อมแทรกคำเก่าที่ถึงรอบทบทวนให้อัตโนมัติ
           </p>
           <div class="flex flex-wrap gap-3">
             <button onclick="switchTab('flashcards')" class="bg-gradient-to-r from-indigo-500 to-sky-500 hover:from-indigo-600 hover:to-sky-600 text-white font-bold px-6 py-3.5 rounded-2xl shadow-xl shadow-indigo-500/30 active:scale-95 transition-all text-sm flex items-center gap-2">
@@ -145,9 +143,9 @@
           <div class="text-slate-500 text-xs">ถึงคิวทบทวนตามสูตร</div>
         </div>
         <div class="bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl">
-          <div class="text-slate-400 text-xs font-medium">คำใหม่ที่รอเรียน</div>
+          <div class="text-slate-400 text-xs font-medium">คำใหม่ที่ยังไม่ได้เรียน</div>
           <div id="statNewPool" class="text-2xl sm:text-3xl font-black text-emerald-400 my-1 en-font">0</div>
-          <div class="text-slate-500 text-xs">พร้อมเติมรอบละ 10 คำ</div>
+          <div class="text-slate-500 text-xs">รอเข้าคิวเรียนรอบละ 10 คำ</div>
         </div>
         <div class="bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl">
           <div class="text-slate-400 text-xs font-medium">คะแนนแต่งประโยค</div>
@@ -223,7 +221,7 @@
       <!-- Batch Completed Screen Controls -->
       <div id="finishSetControls" class="hidden flex flex-col gap-3 pt-2">
         <button type="button" onclick="setupFlashcards()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-400 hover:from-indigo-600 hover:to-emerald-500 text-white font-bold text-base shadow-xl active:scale-98 transition cursor-pointer">
-          🚀 ลุยต่อชุดถัดไปทันที (10 คำ)
+          🚀 ลุยต่อชุดถัดไปทันที (ดึง 10 คำใหม่)
         </button>
       </div>
 
@@ -344,16 +342,10 @@
 
     class LoopSRSEngine {
       constructor() {
-        this.STORAGE_KEY = 'oxford3000_loop_srs_v3';
-        this.STATS_KEY = 'oxford3000_loop_stats_v3';
-        this.cleanOldLegacyData();
+        this.STORAGE_KEY = 'oxford3000_loop_srs_v4';
+        this.STATS_KEY = 'oxford3000_loop_stats_v4';
         this.stats = this.loadStats();
         this.words = this.loadWords();
-      }
-
-      // ล้างข้อมูลแคชรุ่นเก่าที่อิงตามวันที่ เพื่อป้องกันโค้ดค้าง
-      cleanOldLegacyData() {
-        ['oxford3000_srs_data', 'oxford3000_user_stats', 'oxford3000_round_srs_data', 'oxford3000_round_stats'].forEach(k => localStorage.removeItem(k));
       }
 
       loadWords() {
@@ -421,28 +413,32 @@
         this.saveWords();
       }
 
+      // ดึง 10 คำ: จัดลำดับให้ "คำใหม่ที่ยังไม่เคยเรียน" ขึ้นมาก่อนเสมอ
       getBatchQueue() {
         const cRound = this.stats.currentRound || 1;
 
-        // 1. ดึงคำที่ถึงรอบทบทวน
+        // 1. คำที่ถึงกำหนดทบทวนในรอบนี้
         const dueWords = this.words.filter(w => w.srs && !w.srs.isNew && w.srs.nextReviewRound <= cRound);
 
-        // 2. เติมคำใหม่ให้ครบ 10 คำ
-        const needed = Math.max(0, 10 - dueWords.length);
-        const newWords = this.words.filter(w => !w.srs || w.srs.isNew).slice(0, needed);
+        // 2. คำใหม่ที่ยังไม่เคยเรียนเลย (isNew === true)
+        const newWords = this.words.filter(w => !w.srs || w.srs.isNew);
 
-        let queue = [...dueWords, ...newWords];
+        // ให้สิทธิ์คำที่ต้องทวนก่อน แล้วเติมคำใหม่ให้ครบ 10
+        let queue = [...dueWords];
+        const neededNew = Math.max(0, 10 - queue.length);
+        queue = [...queue, ...newWords.slice(0, neededNew)];
 
-        // 3. หากยังไม่ถึง 10 คำ ให้นำคำที่เหลือมาเสริม
+        // 3. ถ้าคำใหม่หมดคลังแล้ว ให้นำคำเก่าที่มีระยะทบทวนใกล้ที่สุดมาทบทวนซ้ำ
         if (queue.length < 10) {
-          const remaining = 10 - queue.length;
-          const others = this.words.filter(w => !queue.some(q => q.id === w.id)).slice(0, remaining);
-          queue = [...queue, ...others];
+          const remainingNeeded = 10 - queue.length;
+          const remainingOld = this.words
+            .filter(w => !queue.some(q => q.id === w.id))
+            .sort((a, b) => (a.srs?.nextReviewRound || 0) - (b.srs?.nextReviewRound || 0))
+            .slice(0, remainingNeeded);
+          queue = [...queue, ...remainingOld];
         }
 
-        // กรณีคำในระบบมีไม่ถึง 10 คำ ให้ใช้ทั้งหมดที่มี
         if (queue.length === 0) queue = [...this.words];
-
         return queue.slice(0, 10);
       }
     }
@@ -460,8 +456,10 @@
           const list = await res.json();
           if (Array.isArray(list) && list.length > 0) {
             const existingMap = new Map(srs.words.map(w => [w.word.toLowerCase(), w]));
+            
+            // นำคำศัพท์จากไฟล์ json มารวม หากเป็นคำใหม่ให้คงสถานะ isNew: true เพื่อให้ถูกดึงมาเรียน
             srs.words = list.map((item, idx) => {
-              const cleanWord = item.word.trim();
+              const cleanWord = (item.word || '').trim();
               if (existingMap.has(cleanWord.toLowerCase())) {
                 const ex = existingMap.get(cleanWord.toLowerCase());
                 return { ...item, srs: ex.srs || { repetitions: 0, nextReviewRound: 1, isNew: true } };
@@ -495,7 +493,8 @@
         srs.stats.completedBatches = 0;
         srs.saveStats();
         srs.saveWords();
-        alert(`โหลดคำศัพท์จาก oxford3000.json สำเร็จ! ทั้งหมด ${srs.words.length} คำ เริ่มต้นรอบที่ 1`);
+        alert(`โหลดคำศัพท์จาก oxford3000.json สำเร็จ! ทั้งหมด ${srs.words.length} คำ ระบบจะเริ่มจากคำใหม่อัตโนมัติ`);
+        setupFlashcards();
         updateDashboard();
       } catch (err) {
         alert("ไม่พบไฟล์ oxford3000.json หรือรูปแบบ JSON มีข้อผิดพลาด");
@@ -557,7 +556,7 @@
       const srsControls = document.getElementById('srsControls');
       const finishControls = document.getElementById('finishSetControls');
 
-      // จบชุด 10 คำ
+      // เมื่อจบ 10 คำของชุดนี้
       if (!currentFCQueue || currentFCQueue.length === 0 || currentFCIndex >= currentFCQueue.length) {
         srs.stats.currentRound = (srs.stats.currentRound || 1) + 1;
         srs.stats.completedBatches = (srs.stats.completedBatches || 0) + 1;
@@ -568,7 +567,7 @@
         document.getElementById('fcPos').innerText = "Batch Complete";
         document.getElementById('fcMeaning').innerText = `จบชุด 10 คำแล้ว! (เข้าสู่รอบที่ ${srs.stats.currentRound})`;
         document.getElementById('fcExampleEn').innerText = "คำศัพท์ได้รับการจัดคิวตามรอบทบทวนใหม่เรียบร้อย";
-        document.getElementById('fcExampleTh').innerText = "กดปุ่มด้านล่างเพื่อเล่นต่อชุดถัดไปได้ทันที";
+        document.getElementById('fcExampleTh').innerText = "กดปุ่มด้านล่างเพื่อดึง 10 คำถัดไปมาเล่นต่อทันที";
         document.getElementById('fcProgressText').innerText = `${currentFCQueue.length} / ${currentFCQueue.length}`;
         document.getElementById('fcProgressBar').style.width = '100%';
         
@@ -603,7 +602,6 @@
       if (box) box.classList.toggle('flipped'); 
     }
 
-    // ฟังก์ชันประเมิน SRS 3 ปุ่มล่าง (แก้ปัญหาเรืองแสงค้าง 100%)
     function handleSRS(rating, e) {
       if (e) {
         e.preventDefault();
@@ -636,7 +634,7 @@
       }
     }
 
-    // Sentence Writing Controller
+    // Sentence Writing Controller (สุ่มคำศัพท์จากคลังมาฝึก ไม่ซ้ำคำเดิม)
     function renderSentence() {
       if (!srs.words || srs.words.length === 0) return;
       const item = srs.words[currentSentenceIndex % srs.words.length];
