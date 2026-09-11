@@ -91,13 +91,13 @@
   <!-- Main Content -->
   <main class="flex-1 max-w-5xl w-full mx-auto p-4 sm:p-6">
 
-    <!-- Desktop Sub Navigation -->
+    <!-- Desktop Navigation -->
     <div class="hidden md:flex items-center justify-center gap-3 mb-6 bg-slate-900/60 p-2 rounded-2xl border border-slate-800">
       <button onclick="switchTab('dashboard')" class="desk-nav-btn px-6 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 bg-indigo-600 text-white shadow-lg shadow-indigo-600/30" data-target="dashboard">
         🏠 แดชบอร์ด & สถิติ
       </button>
       <button onclick="switchTab('flashcards')" class="desk-nav-btn px-6 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 text-slate-400 hover:text-white hover:bg-slate-800" data-target="flashcards">
-        📇 แฟลชการ์ด SRS
+        📇 แฟลชการ์ด SRS (10 คำ/วัน)
       </button>
       <button onclick="switchTab('sentence')" class="desk-nav-btn px-6 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 text-slate-400 hover:text-white hover:bg-slate-800" data-target="sentence">
         ✍️ แต่งประโยคตามคำใบ้
@@ -115,29 +115,11 @@
             🧠 ระบบความจำระยะยาว Ebbinghaus Forgetting Curve
           </span>
           <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-2 leading-snug">
-            ภารกิจประจำวัน: <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">กำหนดเป้าหมายคำศัพท์ได้อิสระ</span>
+            ภารกิจประจำวันนี้: <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">10 คำใหม่ + ทบทวนคำที่ใกล้ลืม</span>
           </h2>
           <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6">
-            คุณสามารถเลือกปรับจำนวนคำใหม่ที่ต้องการเรียนต่อวันได้ตามต้องการ พร้อมระบบจัดคิวทบทวนตามการลืมอัตโนมัติ
+            ระบบจะตัดรอบคำศัพท์วันละ 10 คำ เมื่อท่องครบแล้วคำศัพท์จะเลื่อนวันไปข้างหน้าตามรอบทบทวนอัตโนมัติ
           </p>
-          
-          <!-- Daily Goal Controller -->
-          <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl mb-6 max-w-md">
-            <div class="flex items-center justify-between gap-4">
-              <label for="dailyLimitSelect" class="text-xs sm:text-sm font-semibold text-slate-200">
-                🎯 จำนวนคำใหม่ต่อวัน:
-              </label>
-              <select id="dailyLimitSelect" onchange="changeDailyLimit(this.value)" class="bg-slate-800 border border-slate-700 text-indigo-300 font-bold rounded-xl px-3 py-1.5 text-sm focus:outline-none focus:border-indigo-500">
-                <option value="5">5 คำ/วัน (ชิลๆ)</option>
-                <option value="10">10 คำ/วัน (มาตรฐาน)</option>
-                <option value="20">20 คำ/วัน (เข้มข้น)</option>
-                <option value="30">30 คำ/วัน (สปีดรัน)</option>
-                <option value="50">50 คำ/วัน (ฮาร์ดคอร์)</option>
-                <option value="999999">ไม่จำกัด (เรียนเท่าที่ไหว)</option>
-              </select>
-            </div>
-          </div>
-
           <div class="flex flex-wrap gap-3">
             <button onclick="switchTab('flashcards')" class="bg-gradient-to-r from-indigo-500 to-sky-500 hover:from-indigo-600 hover:to-sky-600 text-white font-bold px-6 py-3.5 rounded-2xl shadow-xl shadow-indigo-500/30 active:scale-95 transition-all text-sm flex items-center gap-2">
               <span>🚀 เริ่มเรียนประจำวันนี้</span>
@@ -152,9 +134,9 @@
       <!-- Metrics -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
         <div class="bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl">
-          <div class="text-slate-400 text-xs font-medium">คำใหม่รอบนี้</div>
+          <div class="text-slate-400 text-xs font-medium">คำใหม่เหลือวันนี้</div>
           <div id="statNewToday" class="text-2xl sm:text-3xl font-black text-indigo-400 my-1 en-font">10</div>
-          <div id="statGoalDesc" class="text-slate-500 text-xs">เป้าหมายวันละ 10 คำ</div>
+          <div class="text-slate-500 text-xs">เป้าหมายวันละ 10 คำ</div>
         </div>
         <div class="bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl">
           <div class="text-slate-400 text-xs font-medium">ต้องทบทวนวันนี้</div>
@@ -173,12 +155,12 @@
         </div>
       </div>
 
-      <!-- Mode Cards -->
+      <!-- Modes Navigation -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div onclick="switchTab('flashcards')" class="group cursor-pointer bg-slate-900 border border-slate-800 hover:border-indigo-500/50 p-6 rounded-2xl transition">
           <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">📇</div>
           <h3 class="text-base sm:text-lg font-bold text-white mb-1">โหมดแฟลชการ์ด SRS</h3>
-          <p class="text-slate-400 text-xs leading-relaxed">ท่องศัพท์ตามเป้าหมายที่คุณเลือก พร้อมระบบดึงคำเก่าที่ใกล้ลืมมาทวนตรงจังหวะ</p>
+          <p class="text-slate-400 text-xs leading-relaxed">ท่องศัพท์วันละ 10 คำ พร้อมระบบดึงคำเก่าที่ใกล้ลืมมาทบทวนตรงจังหวะ</p>
         </div>
         <div onclick="switchTab('sentence')" class="group cursor-pointer bg-slate-900 border border-slate-800 hover:border-sky-500/50 p-6 rounded-2xl transition">
           <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">✍️</div>
@@ -197,8 +179,8 @@
     <section id="view-flashcards" class="hidden max-w-xl mx-auto space-y-5">
       <div class="flex items-center justify-between text-xs sm:text-sm text-slate-400 px-1">
         <div>
-          <span>คิวรอบนี้: </span>
-          <span id="fcProgressText" class="font-bold text-indigo-400 en-font">1 / 10</span>
+          <span>คิวเรียนวันนี้: </span>
+          <span id="fcProgressText" class="font-bold text-indigo-400 en-font">0 / 0</span>
         </div>
         <div id="fcTypeTag" class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">
           คำใหม่ (New)
@@ -209,7 +191,7 @@
         <div id="fcProgressBar" class="bg-indigo-500 h-full w-0 transition-all duration-300"></div>
       </div>
 
-      <!-- Flashcard Item -->
+      <!-- Flashcard Box -->
       <div class="card-flip w-full h-[370px] sm:h-[410px] cursor-pointer" id="flashcardBox" onclick="flipCard()">
         <div class="card-inner shadow-2xl">
           <!-- Front -->
@@ -229,18 +211,18 @@
             
             <div class="w-full bg-slate-800/80 p-4 rounded-xl border border-slate-700 text-left my-auto space-y-2">
               <div class="text-xs text-slate-400 font-semibold">ตัวอย่างประโยค:</div>
-              <div id="fcExampleEn" class="text-sm sm:text-base text-sky-200 en-font font-medium italic">"They had to abandon the burning ship."</div>
-              <div id="fcExampleTh" class="text-xs sm:text-sm text-slate-400">"พวกเขาจำต้องละทิ้งเรือที่กำลังลุกไหม้"</div>
+              <div id="fcExampleEn" class="text-sm sm:text-base text-sky-200 en-font font-medium italic">"..."</div>
+              <div id="fcExampleTh" class="text-xs sm:text-sm text-slate-400">"..."</div>
             </div>
 
             <p class="text-slate-500 text-xs flex items-center gap-1 mt-auto">
-              <span>ประเมินความจำเพื่อจัดคิว SRS ⬇️</span>
+              <span>ประเมินความจำเพื่อจัดคิวรอบต่อไป ⬇️</span>
             </p>
           </div>
         </div>
       </div>
 
-      <!-- SRS Buttons -->
+      <!-- SRS Controls -->
       <div id="srsControls" class="grid grid-cols-3 gap-2.5 pt-2">
         <button onclick="handleSRS(1)" class="flex flex-col items-center justify-center p-3 sm:p-4 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-300 font-bold transition active:scale-95">
           <span class="text-base sm:text-lg">❌ จำไม่ได้</span>
@@ -272,10 +254,9 @@
             <span id="stIndexText" class="font-bold en-font">ข้อ 1/10</span>
           </div>
           <h3 class="text-xs text-slate-400 mb-1">โจทย์ประโยคภาษาไทย:</h3>
-          <p id="stPromptTh" class="text-xl sm:text-2xl font-bold text-white leading-snug">"เขาต้องละทิ้งความฝันนี้ไปในที่สุด"</p>
+          <p id="stPromptTh" class="text-xl sm:text-2xl font-bold text-white leading-snug">...</p>
         </div>
 
-        <!-- Hints -->
         <div class="space-y-3 pt-2">
           <div>
             <button onclick="toggleHint('grammar')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-slate-800/80 text-slate-300 text-xs sm:text-sm font-medium border border-slate-700 transition">
@@ -294,7 +275,6 @@
           </div>
         </div>
 
-        <!-- Input & Action -->
         <div class="space-y-3">
           <label class="block text-xs font-semibold text-slate-400">พิมพ์ประโยคภาษาอังกฤษของคุณ:</label>
           <textarea id="stInputEn" rows="3" placeholder="Type your English sentence here..." class="w-full bg-slate-950 border border-slate-700 rounded-2xl p-4 text-white text-base en-font focus:outline-none focus:border-sky-500 transition resize-none"></textarea>
@@ -361,6 +341,7 @@
 
   <!-- LOGIC SCRIPT -->
   <script>
+    // 10 Starter Seed Words
     const SEED_DATA = [
       { id: 1, word: "abandon", pos: "verb", meaning: "ละทิ้ง, ทอดทิ้ง, ยกเลิก", example_en: "They had to abandon the burning ship.", example_th: "พวกเขาจำต้องละทิ้งเรือที่กำลังลุกไหม้", sentence_th: "เขาต้องละทิ้งความฝันนี้ไปในที่สุด", sentence_en: "He had to abandon this dream in the end.", sentence_alt: ["He had to abandon this dream eventually."], grammar_hint: "Subject + had to + V.infinitive + Object", vocab_hint: "ละทิ้ง = abandon | ความฝัน = dream | ในที่สุด = in the end", error_sentence: "He had to abandoned this dream in the end.", error_wrong: "abandoned", error_correct: "abandon", error_explain: "หลัง had to กริยาต้องเป็น Infinitive ไม่ผัน" },
       { id: 2, word: "ability", pos: "noun", meaning: "ความสามารถ, ศักยภาพ", example_en: "She has the ability to manage large teams.", example_th: "เธอมีความสามารถในการบริหารทีมขนาดใหญ่", sentence_th: "เขามีความสามารถในการพูดได้สามภาษา", sentence_en: "He has the ability to speak three languages.", sentence_alt: ["He has the ability to speak 3 languages."], grammar_hint: "Subject + has the ability + to + V.inf", vocab_hint: "ความสามารถ = ability | พูด = speak | สามภาษา = three languages", error_sentence: "She don't have the ability to speak French.", error_wrong: "don't", error_correct: "doesn't", error_explain: "ประธานเอกพจน์บุรุษที่ 3 (She) ใน Present Simple Tense ปฏิเสธต้องใช้ doesn't" },
@@ -374,12 +355,21 @@
       { id: 10, word: "acquire", pos: "verb", meaning: "ได้รับมา, ครอบครอง, เรียนรู้ทักษะ", example_en: "He acquired a reputation as an expert.", example_th: "เขาได้รับชื่อเสียงในฐานะผู้เชี่ยวชาญ", sentence_th: "เด็กๆ ได้รับทักษะทางภาษาอย่างรวดเร็ว", sentence_en: "Children acquire language skills quickly.", sentence_alt: ["Children acquire language skills very fast."], grammar_hint: "Subject (Plural) + V.1 + Noun phrase + Adverb", vocab_hint: "ได้รับ/พัฒนา = acquire | ทักษะภาษา = language skills | รวดเร็ว = quickly", error_sentence: "She want to acquire new computer skills.", error_wrong: "want", error_correct: "wants", error_explain: "ประธาน She เป็นเอกพจน์ กริยา want ต้องเติม -s" }
     ];
 
+    // Helper: แปลงเวลาท้องถิ่นเป็นสตริง YYYY-MM-DD แบบไม่คลาดเคลื่อน Timezone
+    function getLocalDateString(dateObj = new Date()) {
+      const year = dateObj.getFullYear();
+      const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const day = String(dateObj.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
     class SRSEngine {
       constructor() {
         this.STORAGE_KEY = 'oxford3000_srs_data';
         this.USER_STATS_KEY = 'oxford3000_user_stats';
-        this.words = this.loadWords();
         this.stats = this.loadStats();
+        this.words = this.loadWords();
+        this.checkDayStreak();
       }
 
       loadWords() {
@@ -389,28 +379,58 @@
         }
         return SEED_DATA.map(w => ({
           ...w,
-          srs: { repetitions: 0, interval: 0, easeFactor: 2.5, nextReviewDate: new Date().toISOString().split('T')[0], isNew: true }
+          srs: { 
+            repetitions: 0, 
+            interval: 0, 
+            easeFactor: 2.5, 
+            nextReviewDate: getLocalDateString(), 
+            isNew: true 
+          }
         }));
       }
 
-      saveWords() { localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.words)); }
+      saveWords() { 
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.words)); 
+      }
 
       loadStats() {
-        const def = { streak: 1, lastDate: new Date().toISOString().split('T')[0], sentenceScore: 0, dailyLimit: 10 };
+        const todayStr = getLocalDateString();
+        const def = { streak: 1, lastDate: todayStr, sentenceScore: 0, learnedTodayCount: 0 };
         const stored = localStorage.getItem(this.USER_STATS_KEY);
         return stored ? { ...def, ...JSON.parse(stored) } : def;
       }
 
-      saveStats() { localStorage.setItem(this.USER_STATS_KEY, JSON.stringify(this.stats)); }
+      saveStats() { 
+        localStorage.setItem(this.USER_STATS_KEY, JSON.stringify(this.stats)); 
+      }
+
+      checkDayStreak() {
+        const todayStr = getLocalDateString();
+        if (this.stats.lastDate !== todayStr) {
+          const last = new Date(this.stats.lastDate);
+          const today = new Date(todayStr);
+          const diffDays = Math.round((today - last) / (1000 * 60 * 60 * 24));
+
+          if (diffDays === 1) {
+            this.stats.streak += 1;
+          } else if (diffDays > 1) {
+            this.stats.streak = 1;
+          }
+          this.stats.lastDate = todayStr;
+          this.stats.learnedTodayCount = 0; // รีเซ็ตโควตาการเรียนเมื่อขึ้นวันใหม่
+          this.saveStats();
+        }
+      }
 
       reviewWord(id, rating) {
         const word = this.words.find(w => w.id === id);
         if (!word) return;
 
-        let { repetitions, interval, easeFactor } = word.srs;
+        let { repetitions, interval, easeFactor, isNew } = word.srs;
+
         if (rating < 3) {
           repetitions = 0;
-          interval = 1;
+          interval = 1; // จำไม่ได้ -> ทบทวนใหม่อีก 1 วัน
         } else {
           if (repetitions === 0) interval = 1;
           else if (repetitions === 1) interval = 3;
@@ -420,6 +440,8 @@
         }
 
         easeFactor = Math.max(1.3, easeFactor + (0.1 - (5 - rating) * (0.08 + (5 - rating) * 0.02)));
+
+        // เลื่อนวันทบทวนถัดไปอย่างแม่นยำ
         const nextDate = new Date();
         nextDate.setDate(nextDate.getDate() + interval);
 
@@ -427,18 +449,29 @@
           repetitions,
           interval,
           easeFactor: Number(easeFactor.toFixed(2)),
-          nextReviewDate: nextDate.toISOString().split('T')[0],
-          isNew: false
+          nextReviewDate: getLocalDateString(nextDate),
+          isNew: false // เปลี่ยนสถานะเป็นคำที่เคยเรียนแล้ว
         };
+
+        if (isNew) {
+          this.stats.learnedTodayCount = (this.stats.learnedTodayCount || 0) + 1;
+          this.saveStats();
+        }
+
         this.saveWords();
       }
 
       getTodayQueue() {
-        const today = new Date().toISOString().split('T')[0];
-        const due = this.words.filter(w => !w.srs.isNew && w.srs.nextReviewDate <= today);
-        const limit = Number(this.stats.dailyLimit) || 10;
-        const newWords = this.words.filter(w => w.srs.isNew).slice(0, limit);
-        return [...due, ...newWords];
+        const todayStr = getLocalDateString();
+        
+        // 1. คำเก่าที่ครบกำหนดทบทวนในวันนี้หรือค้างมา
+        const dueWords = this.words.filter(w => !w.srs.isNew && w.srs.nextReviewDate <= todayStr);
+        
+        // 2. คำใหม่ตามโควตาคงเหลือ (สูงสุด 10 คำต่อวัน)
+        const remainingQuota = Math.max(0, 10 - (this.stats.learnedTodayCount || 0));
+        const newWords = this.words.filter(w => w.srs.isNew).slice(0, remainingQuota);
+
+        return [...dueWords, ...newWords];
       }
     }
 
@@ -448,6 +481,7 @@
     let currentSentenceIndex = 0;
     let currentGrammarIndex = 0;
 
+    // อัปเดตข้อมูลจาก oxford3000.json
     async function loadJsonDatabase() {
       try {
         const res = await fetch('./oxford3000.json');
@@ -463,7 +497,13 @@
               return {
                 ...item,
                 id: item.id || (idx + 1),
-                srs: { repetitions: 0, interval: 0, easeFactor: 2.5, nextReviewDate: new Date().toISOString().split('T')[0], isNew: true }
+                srs: { 
+                  repetitions: 0, 
+                  interval: 0, 
+                  easeFactor: 2.5, 
+                  nextReviewDate: getLocalDateString(), 
+                  isNew: true 
+                }
               };
             });
             srs.saveWords();
@@ -483,20 +523,22 @@
         srs.words = list.map((item, idx) => ({
           ...item,
           id: item.id || (idx + 1),
-          srs: { repetitions: 0, interval: 0, easeFactor: 2.5, nextReviewDate: new Date().toISOString().split('T')[0], isNew: true }
+          srs: { 
+            repetitions: 0, 
+            interval: 0, 
+            easeFactor: 2.5, 
+            nextReviewDate: getLocalDateString(), 
+            isNew: true 
+          }
         }));
+        srs.stats.learnedTodayCount = 0;
+        srs.saveStats();
         srs.saveWords();
         alert(`โหลดคำศัพท์จาก oxford3000.json สำเร็จ! ทั้งหมด ${srs.words.length} คำ`);
         updateDashboard();
       } catch (err) {
         alert("ไม่พบไฟล์ oxford3000.json หรือรูปแบบ JSON ไม่ถูกต้อง");
       }
-    }
-
-    function changeDailyLimit(newLimit) {
-      srs.stats.dailyLimit = Number(newLimit);
-      srs.saveStats();
-      updateDashboard();
     }
 
     function switchTab(tabId) {
@@ -525,28 +567,22 @@
     }
 
     function updateDashboard() {
-      const today = new Date().toISOString().split('T')[0];
-      const due = srs.words.filter(w => !w.srs.isNew && w.srs.nextReviewDate <= today).length;
-      const totalNewAvailable = srs.words.filter(w => w.srs.isNew).length;
-      const limit = Number(srs.stats.dailyLimit) || 10;
-      const newTodayCount = limit > 9999 ? totalNewAvailable : Math.min(limit, totalNewAvailable);
+      const todayStr = getLocalDateString();
+      const due = srs.words.filter(w => !w.srs.isNew && w.srs.nextReviewDate <= todayStr).length;
+      const newRemaining = Math.max(0, 10 - (srs.stats.learnedTodayCount || 0));
       const mastered = srs.words.filter(w => w.srs.repetitions >= 4).length;
 
       document.getElementById('totalWordCount').innerText = srs.words.length;
-      document.getElementById('statNewToday').innerText = newTodayCount;
-      document.getElementById('statGoalDesc').innerText = limit > 9999 ? "เรียนได้ไม่จำกัดคำ" : `เป้าหมายวันละ ${limit} คำ`;
+      document.getElementById('statNewToday').innerText = newRemaining;
       document.getElementById('statDueToday').innerText = due;
       document.getElementById('statMastered').innerText = mastered;
       document.getElementById('statSentenceScore').innerText = srs.stats.sentenceScore || 0;
       document.getElementById('streakCount').innerText = `${srs.stats.streak} วัน`;
-
-      const selectEl = document.getElementById('dailyLimitSelect');
-      if (selectEl) selectEl.value = limit;
     }
 
+    // Flashcards Controller
     function setupFlashcards() {
       currentFCQueue = srs.getTodayQueue();
-      if (currentFCQueue.length === 0) currentFCQueue = srs.words.slice(0, 10);
       currentFCIndex = 0;
       renderFC();
     }
@@ -555,12 +591,12 @@
       const box = document.getElementById('flashcardBox');
       box.classList.remove('flipped');
 
-      if (currentFCIndex >= currentFCQueue.length) {
+      if (currentFCQueue.length === 0 || currentFCIndex >= currentFCQueue.length) {
         document.getElementById('fcWord').innerText = "🎉 ยอดเยี่ยม!";
         document.getElementById('fcPos').innerText = "Mission Completed";
-        document.getElementById('fcMeaning').innerText = "คุณทบทวนคำศัพท์ประจำรอบนี้เสร็จสิ้นแล้ว";
+        document.getElementById('fcMeaning').innerText = "คุณทบทวนคำศัพท์ประจำวันนี้เสร็จสิ้นแล้ว";
         document.getElementById('fcExampleEn').innerText = "Keep up the great work!";
-        document.getElementById('fcExampleTh').innerText = "คำศัพท์กำลังถูกบันทึกสู่ความจำระยะยาว";
+        document.getElementById('fcExampleTh').innerText = "ระบบได้เลื่อนวันทบทวนสำหรับคำศัพท์ชุดนี้แล้ว พักผ่อนได้เลยครับ";
         document.getElementById('fcProgressText').innerText = `${currentFCQueue.length} / ${currentFCQueue.length}`;
         document.getElementById('fcProgressBar').style.width = '100%';
         document.getElementById('srsControls').style.display = 'none';
@@ -583,7 +619,9 @@
       typeTag.innerText = item.srs.isNew ? "คำใหม่ (New)" : `ทบทวนรอบที่ ${item.srs.repetitions}`;
     }
 
-    function flipCard() { document.getElementById('flashcardBox').classList.toggle('flipped'); }
+    function flipCard() { 
+      document.getElementById('flashcardBox').classList.toggle('flipped'); 
+    }
 
     function handleSRS(rating) {
       if (currentFCIndex >= currentFCQueue.length) return;
@@ -601,6 +639,7 @@
       }
     }
 
+    // Sentence Writing Controller
     function renderSentence() {
       const item = srs.words[currentSentenceIndex % srs.words.length];
       document.getElementById('stIndexText').innerText = `ข้อ ${(currentSentenceIndex % srs.words.length) + 1} / ${srs.words.length}`;
@@ -624,7 +663,9 @@
       icon.innerText = el.classList.contains('hidden') ? '▼' : '▲';
     }
 
-    function clean(s) { return (s || '').trim().toLowerCase().replace(/[.,!?'"]/g, '').replace(/\s+/g, ' '); }
+    function clean(s) { 
+      return (s || '').trim().toLowerCase().replace(/[.,!?'"]/g, '').replace(/\s+/g, ' '); 
+    }
 
     function checkSentence() {
       const item = srs.words[currentSentenceIndex % srs.words.length];
@@ -650,8 +691,12 @@
       document.getElementById('btnNextSentence').classList.remove('hidden');
     }
 
-    function nextSentence() { currentSentenceIndex++; renderSentence(); }
+    function nextSentence() { 
+      currentSentenceIndex++; 
+      renderSentence(); 
+    }
 
+    // Grammar Spotter Controller
     function renderGrammar() {
       const item = srs.words[currentGrammarIndex % srs.words.length];
       document.getElementById('gmIndexText').innerText = `ข้อ ${(currentGrammarIndex % srs.words.length) + 1} / ${srs.words.length}`;
@@ -683,7 +728,10 @@
       document.getElementById('btnNextGrammar').classList.remove('hidden');
     }
 
-    function nextGrammar() { currentGrammarIndex++; renderGrammar(); }
+    function nextGrammar() { 
+      currentGrammarIndex++; 
+      renderGrammar(); 
+    }
 
     window.addEventListener('DOMContentLoaded', () => {
       loadJsonDatabase();
