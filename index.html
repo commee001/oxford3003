@@ -39,7 +39,7 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white pb-16 md:pb-6">
 
-  <!-- Header -->
+  <!-- Top Navigation Header -->
   <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 px-4 py-3 sm:px-6">
     <div class="max-w-5xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('dashboard')">
@@ -48,15 +48,15 @@
         </div>
         <div>
           <h1 class="text-base sm:text-lg font-bold tracking-tight text-white leading-tight">Oxford 3000 Master</h1>
-          <p class="text-xs text-indigo-400 font-medium">Round-Based SRS Training</p>
+          <p class="text-xs text-indigo-400 font-medium">Loop-Based Adaptive SRS</p>
         </div>
       </div>
 
       <div class="flex items-center gap-2 sm:gap-4 text-xs sm:text-sm">
         <div class="bg-slate-800/90 px-3 py-1.5 rounded-full border border-slate-700 flex items-center gap-1.5">
           <span class="text-amber-400">🔄</span>
-          <span class="text-slate-400 hidden sm:inline">เล่นไปแล้ว:</span>
-          <span id="streakCount" class="font-bold text-white">0 รอบ</span>
+          <span class="text-slate-400 hidden sm:inline">เล่นจบไปแล้ว:</span>
+          <span id="streakCount" class="font-bold text-white">0 ชุด</span>
         </div>
         <div class="bg-slate-800/90 px-3 py-1.5 rounded-full border border-slate-700 flex items-center gap-1.5">
           <span class="text-emerald-400">📚</span>
@@ -67,7 +67,7 @@
     </div>
   </header>
 
-  <!-- Mobile Tab Navigation -->
+  <!-- Mobile Bottom Tab Navigation -->
   <nav class="fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-lg border-t border-slate-800 md:hidden flex justify-around py-2 px-1 shadow-2xl">
     <button onclick="switchTab('dashboard')" class="nav-btn flex flex-col items-center gap-1 px-3 py-1 rounded-xl text-indigo-400 font-medium text-xs" data-target="dashboard">
       <span class="text-lg">🏠</span>
@@ -90,13 +90,13 @@
   <!-- Main Container -->
   <main class="flex-1 max-w-5xl w-full mx-auto p-4 sm:p-6">
 
-    <!-- Desktop Nav -->
+    <!-- Desktop Nav Sub-Bar -->
     <div class="hidden md:flex items-center justify-center gap-3 mb-6 bg-slate-900/60 p-2 rounded-2xl border border-slate-800">
       <button onclick="switchTab('dashboard')" class="desk-nav-btn px-6 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 bg-indigo-600 text-white shadow-lg shadow-indigo-600/30" data-target="dashboard">
         🏠 แดชบอร์ด & สถิติ
       </button>
       <button onclick="switchTab('flashcards')" class="desk-nav-btn px-6 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 text-slate-400 hover:text-white hover:bg-slate-800" data-target="flashcards">
-        📇 แฟลชการ์ด SRS (เล่นได้ไม่จำกัด)
+        📇 แฟลชการ์ด SRS (รอบละ 10 คำ)
       </button>
       <button onclick="switchTab('sentence')" class="desk-nav-btn px-6 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 text-slate-400 hover:text-white hover:bg-slate-800" data-target="sentence">
         ✍️ แต่งประโยคตามคำใบ้
@@ -111,17 +111,19 @@
       <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-950/80 via-purple-950/40 to-slate-900 p-6 sm:p-8 border border-indigo-500/30 shadow-2xl">
         <div class="relative z-10 max-w-2xl">
           <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-xs font-semibold mb-3">
-            ⚡ ระบบ Spaced Repetition แบบวนรอบอิสระ
+            ⚡ Spaced Repetition แบบวนรอบอิสระ (เล่นซ้ำต่อเนื่องได้ทันที)
           </span>
           <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-2 leading-snug">
-            ชุดคำศัพท์รอบละ <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">10 คำ (เล่นซ้ำได้ต่อเนื่องทันที)</span>
+            ภารกิจ: <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">ชุดละ 10 คำ (รอบทวนคำลืมอัตโนมัติ)</span>
           </h2>
           <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6">
-            จำไม่ได้วนกลับมาในรอบหน้า (+1 รอบ) จำไม่ค่อยได้กลับมาในอีก 2-3 รอบ และจำได้แม่นเว้นไป 6-7 รอบ เล่นต่อได้เรื่อยๆ ไม่ต้องรอข้ามวัน
+            ❌ จำไม่ได้: โผล่มาทวนในรอบถัดไปทันที (+1 รอบ)<br>
+            🤔 เกือบจำได้: เว้นช่วงกลับมาในอีก 2–3 รอบข้างหน้า<br>
+            ✨ จำได้แม่น: ผลักไปอีก 6–7 รอบข้างหน้า
           </p>
           <div class="flex flex-wrap gap-3">
             <button onclick="switchTab('flashcards')" class="bg-gradient-to-r from-indigo-500 to-sky-500 hover:from-indigo-600 hover:to-sky-600 text-white font-bold px-6 py-3.5 rounded-2xl shadow-xl shadow-indigo-500/30 active:scale-95 transition-all text-sm flex items-center gap-2">
-              <span>🚀 เริ่มเล่นชุด 10 คำทันที</span>
+              <span>🚀 เริ่มเล่นชุด 10 คำ</span>
             </button>
             <button onclick="reloadFromJSON()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium px-5 py-3.5 rounded-2xl transition text-xs sm:text-sm flex items-center gap-2">
               <span>🔄 โหลดคำศัพท์ใหม่จากไฟล์</span>
@@ -130,12 +132,12 @@
         </div>
       </div>
 
-      <!-- Quick Metrics -->
+      <!-- Metrics -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
         <div class="bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl">
-          <div class="text-slate-400 text-xs font-medium">รอบปัจจุบัน</div>
+          <div class="text-slate-400 text-xs font-medium">รอบระบบปัจจุบัน</div>
           <div id="statGlobalRound" class="text-2xl sm:text-3xl font-black text-indigo-400 my-1 en-font">1</div>
-          <div class="text-slate-500 text-xs">นับสะสมตามการเล่นจริง</div>
+          <div class="text-slate-500 text-xs">นับรอบสะสม</div>
         </div>
         <div class="bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl">
           <div class="text-slate-400 text-xs font-medium">คำที่รอทวนรอบนี้</div>
@@ -143,9 +145,9 @@
           <div class="text-slate-500 text-xs">ถึงคิวทบทวนตามสูตร</div>
         </div>
         <div class="bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl">
-          <div class="text-slate-400 text-xs font-medium">คำใหม่ที่ยังไม่เคยเจอ</div>
+          <div class="text-slate-400 text-xs font-medium">คำใหม่ที่รอเรียน</div>
           <div id="statNewPool" class="text-2xl sm:text-3xl font-black text-emerald-400 my-1 en-font">0</div>
-          <div class="text-slate-500 text-xs">พร้อมดึงมาเติมรอบละ 10 คำ</div>
+          <div class="text-slate-500 text-xs">พร้อมเติมรอบละ 10 คำ</div>
         </div>
         <div class="bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl">
           <div class="text-slate-400 text-xs font-medium">คะแนนแต่งประโยค</div>
@@ -159,7 +161,7 @@
     <section id="view-flashcards" class="hidden max-w-xl mx-auto space-y-5">
       <div class="flex items-center justify-between text-xs sm:text-sm text-slate-400 px-1">
         <div>
-          <span>ความคืบหน้าชุดนี้: </span>
+          <span>คำที่: </span>
           <span id="fcProgressText" class="font-bold text-indigo-400 en-font">1 / 10</span>
         </div>
         <div id="fcTypeTag" class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">
@@ -171,8 +173,8 @@
         <div id="fcProgressBar" class="bg-indigo-500 h-full w-0 transition-all duration-300"></div>
       </div>
 
-      <!-- Flashcard Box -->
-      <div class="card-flip w-full h-[370px] sm:h-[410px] cursor-pointer" id="flashcardBox" onclick="flipCard()">
+      <!-- Flashcard Item -->
+      <div class="card-flip w-full h-[370px] sm:h-[410px] cursor-pointer select-none" id="flashcardBox" onclick="flipCard()">
         <div class="card-inner shadow-2xl">
           <!-- Front -->
           <div class="card-front bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-indigo-500/30 p-8">
@@ -202,30 +204,31 @@
         </div>
       </div>
 
-      <!-- SRS Controls -->
+      <!-- SRS Controls (Action Buttons) -->
       <div id="srsControls" class="grid grid-cols-3 gap-2.5 pt-2">
-        <button onclick="handleSRS(1)" class="flex flex-col items-center justify-center p-3 sm:p-4 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-300 font-bold transition active:scale-95">
+        <button type="button" onclick="handleSRS(1, event)" class="flex flex-col items-center justify-center p-3 sm:p-4 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 active:bg-rose-500/30 border border-rose-500/30 text-rose-300 font-bold transition active:scale-95 cursor-pointer">
           <span class="text-base sm:text-lg">❌ จำไม่ได้</span>
           <span class="text-[10px] text-rose-400 font-normal">เจอกันรอบหน้า (+1)</span>
         </button>
-        <button onclick="handleSRS(3)" class="flex flex-col items-center justify-center p-3 sm:p-4 rounded-2xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 font-bold transition active:scale-95">
+        <button type="button" onclick="handleSRS(3, event)" class="flex flex-col items-center justify-center p-3 sm:p-4 rounded-2xl bg-amber-500/10 hover:bg-amber-500/20 active:bg-amber-500/30 border border-amber-500/30 text-amber-300 font-bold transition active:scale-95 cursor-pointer">
           <span class="text-base sm:text-lg">🤔 เกือบจำได้</span>
           <span class="text-[10px] text-amber-400 font-normal">เว้น 2-3 รอบ</span>
         </button>
-        <button onclick="handleSRS(5)" class="flex flex-col items-center justify-center p-3 sm:p-4 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 font-bold transition active:scale-95">
+        <button type="button" onclick="handleSRS(5, event)" class="flex flex-col items-center justify-center p-3 sm:p-4 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500/20 active:bg-emerald-500/30 border border-emerald-500/30 text-emerald-300 font-bold transition active:scale-95 cursor-pointer">
           <span class="text-base sm:text-lg">✨ จำได้แม่น</span>
           <span class="text-[10px] text-emerald-400 font-normal">เว้น 6-7 รอบ</span>
         </button>
       </div>
 
+      <!-- Batch Completed Screen Controls -->
       <div id="finishSetControls" class="hidden flex flex-col gap-3 pt-2">
-        <button onclick="setupFlashcards()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-400 text-white font-bold text-base shadow-xl active:scale-98 transition">
-          🚀 ลุยต่อชุดถัดไปทันที (10 คำใหม่/ทวน)
+        <button type="button" onclick="setupFlashcards()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-400 hover:from-indigo-600 hover:to-emerald-500 text-white font-bold text-base shadow-xl active:scale-98 transition cursor-pointer">
+          🚀 ลุยต่อชุดถัดไปทันที (10 คำ)
         </button>
       </div>
 
       <div class="text-center pt-1">
-        <button onclick="speakCurrentWord()" class="text-xs text-indigo-400 hover:text-indigo-300 flex items-center justify-center gap-1.5 mx-auto bg-slate-900 border border-slate-800 px-4 py-2 rounded-full">
+        <button type="button" onclick="speakCurrentWord()" class="text-xs text-indigo-400 hover:text-indigo-300 flex items-center justify-center gap-1.5 mx-auto bg-slate-900 border border-slate-800 px-4 py-2 rounded-full cursor-pointer">
           <span>🔊 ฟังการออกเสียงคำนี้</span>
         </button>
       </div>
@@ -245,7 +248,7 @@
 
         <div class="space-y-3 pt-2">
           <div>
-            <button onclick="toggleHint('grammar')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-slate-800/80 text-slate-300 text-xs sm:text-sm font-medium border border-slate-700 transition">
+            <button type="button" onclick="toggleHint('grammar')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-slate-800/80 text-slate-300 text-xs sm:text-sm font-medium border border-slate-700 transition">
               <span class="flex items-center gap-2"><span>💡</span><span>คำใบ้โครงสร้างประโยค (Grammar Pattern)</span></span>
               <span id="stGrammarIcon">▼</span>
             </button>
@@ -253,7 +256,7 @@
           </div>
 
           <div>
-            <button onclick="toggleHint('vocab')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-slate-800/80 text-slate-300 text-xs sm:text-sm font-medium border border-slate-700 transition">
+            <button type="button" onclick="toggleHint('vocab')" class="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-slate-800/80 text-slate-300 text-xs sm:text-sm font-medium border border-slate-700 transition">
               <span class="flex items-center gap-2"><span>📖</span><span>คำใบ้คำศัพท์ที่ต้องใช้ (Vocab Hint)</span></span>
               <span id="stVocabIcon">▼</span>
             </button>
@@ -266,10 +269,10 @@
           <textarea id="stInputEn" rows="3" placeholder="Type your English sentence here..." class="w-full bg-slate-950 border border-slate-700 rounded-2xl p-4 text-white text-base en-font focus:outline-none focus:border-sky-500 transition resize-none"></textarea>
           
           <div class="flex gap-3">
-            <button onclick="checkSentence()" class="flex-1 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-sky-500/20 active:scale-98 transition text-sm">
+            <button type="button" onclick="checkSentence()" class="flex-1 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-sky-500/20 active:scale-98 transition text-sm">
               ส่งตรวจคำตอบ ✨
             </button>
-            <button onclick="nextSentence()" id="btnNextSentence" class="hidden px-5 py-3.5 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl border border-slate-700 text-sm">
+            <button type="button" onclick="nextSentence()" id="btnNextSentence" class="hidden px-5 py-3.5 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl border border-slate-700 text-sm">
               ข้อถัดไป ➡️
             </button>
           </div>
@@ -310,10 +313,10 @@
           </div>
 
           <div class="flex gap-3">
-            <button onclick="checkGrammar()" class="flex-1 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-emerald-500/20 active:scale-98 transition text-sm">
+            <button type="button" onclick="checkGrammar()" class="flex-1 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-emerald-500/20 active:scale-98 transition text-sm">
               ตรวจแกรมมา 🔍
             </button>
-            <button onclick="nextGrammar()" id="btnNextGrammar" class="hidden px-5 py-3.5 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl border border-slate-700 text-sm">
+            <button type="button" onclick="nextGrammar()" id="btnNextGrammar" class="hidden px-5 py-3.5 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl border border-slate-700 text-sm">
               ข้อถัดไป ➡️
             </button>
           </div>
@@ -339,18 +342,27 @@
       { id: 10, word: "acquire", pos: "verb", meaning: "ได้รับมา, ครอบครอง, เรียนรู้ทักษะ", example_en: "He acquired a reputation as an expert.", example_th: "เขาได้รับชื่อเสียงในฐานะผู้เชี่ยวชาญ", sentence_th: "เด็กๆ ได้รับทักษะทางภาษาอย่างรวดเร็ว", sentence_en: "Children acquire language skills quickly.", sentence_alt: ["Children acquire language skills very fast."], grammar_hint: "Subject (Plural) + V.1 + Noun phrase + Adverb", vocab_hint: "ได้รับ/พัฒนา = acquire | ทักษะภาษา = language skills | รวดเร็ว = quickly", error_sentence: "She want to acquire new computer skills.", error_wrong: "want", error_correct: "wants", error_explain: "ประธาน She เป็นเอกพจน์ กริยา want ต้องเติม -s" }
     ];
 
-    class RoundBasedSRSEngine {
+    class LoopSRSEngine {
       constructor() {
-        this.STORAGE_KEY = 'oxford3000_round_srs_data';
-        this.STATS_KEY = 'oxford3000_round_stats';
+        this.STORAGE_KEY = 'oxford3000_loop_srs_v3';
+        this.STATS_KEY = 'oxford3000_loop_stats_v3';
+        this.cleanOldLegacyData();
         this.stats = this.loadStats();
         this.words = this.loadWords();
+      }
+
+      // ล้างข้อมูลแคชรุ่นเก่าที่อิงตามวันที่ เพื่อป้องกันโค้ดค้าง
+      cleanOldLegacyData() {
+        ['oxford3000_srs_data', 'oxford3000_user_stats', 'oxford3000_round_srs_data', 'oxford3000_round_stats'].forEach(k => localStorage.removeItem(k));
       }
 
       loadWords() {
         const stored = localStorage.getItem(this.STORAGE_KEY);
         if (stored) {
-          try { return JSON.parse(stored); } catch(e) {}
+          try {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          } catch(e) {}
         }
         return SEED_DATA.map(w => ({
           ...w,
@@ -365,7 +377,10 @@
       loadStats() {
         const def = { currentRound: 1, sentenceScore: 0, completedBatches: 0 };
         const stored = localStorage.getItem(this.STATS_KEY);
-        return stored ? { ...def, ...JSON.parse(stored) } : def;
+        if (stored) {
+          try { return { ...def, ...JSON.parse(stored) }; } catch(e) {}
+        }
+        return def;
       }
 
       saveStats() { 
@@ -376,25 +391,29 @@
         const word = this.words.find(w => w.id === id);
         if (!word) return;
 
+        if (!word.srs) {
+          word.srs = { repetitions: 0, nextReviewRound: 1, isNew: true };
+        }
+
         let { repetitions } = word.srs;
         let addRounds = 1;
 
         if (rating === 1) {
-          // ❌ จำไม่ได้ -> รอบต่อไปมาทันที (+1 รอบ)
+          // จำไม่ได้: เจอกันรอบถัดไปทันที (+1 รอบ)
           repetitions = 0;
           addRounds = 1;
         } else if (rating === 3) {
-          // 🤔 เกือบจำได้ -> อีก 2-3 รอบข้างหน้าสุ่ม (+2 ถึง +3 รอบ)
+          // เกือบจำได้: เว้น 2 - 3 รอบ
           repetitions++;
           addRounds = Math.floor(Math.random() * 2) + 2; 
         } else if (rating === 5) {
-          // ✨ จำได้แม่น -> อีก 6-7 รอบค่อยมา (+6 ถึง +7 รอบ)
+          // จำได้แม่น: เว้น 6 - 7 รอบ
           repetitions++;
           addRounds = Math.floor(Math.random() * 2) + 6; 
         }
 
         word.srs = {
-          repetitions,
+          repetitions: repetitions,
           nextReviewRound: this.stats.currentRound + addRounds,
           isNew: false
         };
@@ -402,31 +421,33 @@
         this.saveWords();
       }
 
-      // ดึง 10 คำสำหรับรอบนี้ (คำที่ครบกำหนดทบทวนรอบนี้ + คำใหม่)
       getBatchQueue() {
-        const cRound = this.stats.currentRound;
+        const cRound = this.stats.currentRound || 1;
 
-        // 1. คำที่ถึงรอบทบทวน (nextReviewRound <= cRound)
-        const dueWords = this.words.filter(w => !w.srs.isNew && w.srs.nextReviewRound <= cRound);
+        // 1. ดึงคำที่ถึงรอบทบทวน
+        const dueWords = this.words.filter(w => w.srs && !w.srs.isNew && w.srs.nextReviewRound <= cRound);
 
-        // 2. เติมด้วยคำใหม่จนครบ 10 คำ
+        // 2. เติมคำใหม่ให้ครบ 10 คำ
         const needed = Math.max(0, 10 - dueWords.length);
-        const newWords = this.words.filter(w => w.srs.isNew).slice(0, needed);
+        const newWords = this.words.filter(w => !w.srs || w.srs.isNew).slice(0, needed);
 
         let queue = [...dueWords, ...newWords];
 
-        // หากยังไม่ครบ 10 คำและไม่มีคำใหม่เหลือ ให้วนคำที่ใกล้ถึงรอบมาช่วยทบทวน
+        // 3. หากยังไม่ถึง 10 คำ ให้นำคำที่เหลือมาเสริม
         if (queue.length < 10) {
           const remaining = 10 - queue.length;
           const others = this.words.filter(w => !queue.some(q => q.id === w.id)).slice(0, remaining);
           queue = [...queue, ...others];
         }
 
+        // กรณีคำในระบบมีไม่ถึง 10 คำ ให้ใช้ทั้งหมดที่มี
+        if (queue.length === 0) queue = [...this.words];
+
         return queue.slice(0, 10);
       }
     }
 
-    const srs = new RoundBasedSRSEngine();
+    const srs = new LoopSRSEngine();
     let currentFCIndex = 0;
     let currentFCQueue = [];
     let currentSentenceIndex = 0;
@@ -442,7 +463,8 @@
             srs.words = list.map((item, idx) => {
               const cleanWord = item.word.trim();
               if (existingMap.has(cleanWord.toLowerCase())) {
-                return { ...item, ...existingMap.get(cleanWord.toLowerCase()) };
+                const ex = existingMap.get(cleanWord.toLowerCase());
+                return { ...item, srs: ex.srs || { repetitions: 0, nextReviewRound: 1, isNew: true } };
               }
               return {
                 ...item,
@@ -454,7 +476,7 @@
           }
         }
       } catch (e) {
-        console.log("Using local database");
+        console.log("Using seed or current database");
       }
       updateDashboard();
     }
@@ -473,10 +495,10 @@
         srs.stats.completedBatches = 0;
         srs.saveStats();
         srs.saveWords();
-        alert(`โหลดคำศัพท์จาก oxford3000.json สำเร็จ! ทั้งหมด ${srs.words.length} คำ เริ่มรอบที่ 1`);
+        alert(`โหลดคำศัพท์จาก oxford3000.json สำเร็จ! ทั้งหมด ${srs.words.length} คำ เริ่มต้นรอบที่ 1`);
         updateDashboard();
       } catch (err) {
-        alert("ไม่พบไฟล์ oxford3000.json หรือรูปแบบ JSON ไม่ถูกต้อง");
+        alert("ไม่พบไฟล์ oxford3000.json หรือรูปแบบ JSON มีข้อผิดพลาด");
       }
     }
 
@@ -506,53 +528,64 @@
     }
 
     function updateDashboard() {
-      const cRound = srs.stats.currentRound;
-      const due = srs.words.filter(w => !w.srs.isNew && w.srs.nextReviewRound <= cRound).length;
-      const newPool = srs.words.filter(w => w.srs.isNew).length;
+      const cRound = srs.stats.currentRound || 1;
+      const due = srs.words.filter(w => w.srs && !w.srs.isNew && w.srs.nextReviewRound <= cRound).length;
+      const newPool = srs.words.filter(w => !w.srs || w.srs.isNew).length;
 
       document.getElementById('totalWordCount').innerText = srs.words.length;
       document.getElementById('statGlobalRound').innerText = cRound;
       document.getElementById('statDueRounds').innerText = due;
       document.getElementById('statNewPool').innerText = newPool;
       document.getElementById('statSentenceScore').innerText = srs.stats.sentenceScore || 0;
-      document.getElementById('streakCount').innerText = `${srs.stats.completedBatches || 0} รอบ`;
+      document.getElementById('streakCount').innerText = `${srs.stats.completedBatches || 0} ชุด`;
     }
 
     function setupFlashcards() {
       currentFCQueue = srs.getBatchQueue();
       currentFCIndex = 0;
-      document.getElementById('finishSetControls').classList.add('hidden');
-      document.getElementById('srsControls').style.display = 'grid';
+      const finishControls = document.getElementById('finishSetControls');
+      const srsControls = document.getElementById('srsControls');
+      if (finishControls) finishControls.classList.add('hidden');
+      if (srsControls) srsControls.style.display = 'grid';
       renderFC();
     }
 
     function renderFC() {
       const box = document.getElementById('flashcardBox');
-      box.classList.remove('flipped');
+      if (box) box.classList.remove('flipped');
 
-      if (currentFCQueue.length === 0 || currentFCIndex >= currentFCQueue.length) {
-        // จบ 10 คำของชุดนี้ -> เพิ่มเลขรอบของระบบขึ้น 1 รอบทันที
-        srs.stats.currentRound += 1;
+      const srsControls = document.getElementById('srsControls');
+      const finishControls = document.getElementById('finishSetControls');
+
+      // จบชุด 10 คำ
+      if (!currentFCQueue || currentFCQueue.length === 0 || currentFCIndex >= currentFCQueue.length) {
+        srs.stats.currentRound = (srs.stats.currentRound || 1) + 1;
         srs.stats.completedBatches = (srs.stats.completedBatches || 0) + 1;
         srs.saveStats();
         updateDashboard();
 
         document.getElementById('fcWord').innerText = "🎉 ยอดเยี่ยม!";
         document.getElementById('fcPos').innerText = "Batch Complete";
-        document.getElementById('fcMeaning').innerText = `จบชุด 10 คำเรียบร้อย! (เข้าสู่รอบที่ ${srs.stats.currentRound})`;
-        document.getElementById('fcExampleEn').innerText = "คำศัพท์ได้รับการจัดคิวตามรอบทวนใหม่เรียบร้อย";
-        document.getElementById('fcExampleTh').innerText = "กดปุ่มด้านล่างเพื่อลุยชุด 10 คำต่อไปได้ทันที";
-        document.getElementById('fcProgressText').innerText = `10 / 10`;
+        document.getElementById('fcMeaning').innerText = `จบชุด 10 คำแล้ว! (เข้าสู่รอบที่ ${srs.stats.currentRound})`;
+        document.getElementById('fcExampleEn').innerText = "คำศัพท์ได้รับการจัดคิวตามรอบทบทวนใหม่เรียบร้อย";
+        document.getElementById('fcExampleTh').innerText = "กดปุ่มด้านล่างเพื่อเล่นต่อชุดถัดไปได้ทันที";
+        document.getElementById('fcProgressText').innerText = `${currentFCQueue.length} / ${currentFCQueue.length}`;
         document.getElementById('fcProgressBar').style.width = '100%';
-        document.getElementById('srsControls').style.display = 'none';
-        document.getElementById('finishSetControls').classList.remove('hidden');
+        
+        if (srsControls) srsControls.style.display = 'none';
+        if (finishControls) finishControls.classList.remove('hidden');
         return;
       }
 
       const item = currentFCQueue[currentFCIndex];
-      document.getElementById('fcWord').innerText = item.word;
+      if (!item) return;
+
+      if (srsControls) srsControls.style.display = 'grid';
+      if (finishControls) finishControls.classList.add('hidden');
+
+      document.getElementById('fcWord').innerText = item.word || '';
       document.getElementById('fcPos').innerText = item.pos || 'word';
-      document.getElementById('fcMeaning').innerText = item.meaning || "";
+      document.getElementById('fcMeaning').innerText = item.meaning || '';
       document.getElementById('fcExampleEn').innerText = item.example_en ? `"${item.example_en}"` : "";
       document.getElementById('fcExampleTh').innerText = item.example_th ? `"${item.example_th}"` : "";
 
@@ -560,22 +593,43 @@
       document.getElementById('fcProgressBar').style.width = `${((currentFCIndex + 1) / currentFCQueue.length) * 100}%`;
 
       const typeTag = document.getElementById('fcTypeTag');
-      typeTag.innerText = item.srs.isNew ? "คำใหม่ (New)" : `ทบทวนรอบที่ ${item.srs.repetitions}`;
+      if (typeTag) {
+        typeTag.innerText = (!item.srs || item.srs.isNew) ? "คำใหม่ (New)" : `ทบทวนรอบที่ ${item.srs.repetitions}`;
+      }
     }
 
     function flipCard() { 
-      document.getElementById('flashcardBox').classList.toggle('flipped'); 
+      const box = document.getElementById('flashcardBox');
+      if (box) box.classList.toggle('flipped'); 
     }
 
-    function handleSRS(rating) {
-      if (currentFCIndex >= currentFCQueue.length) return;
-      srs.reviewWord(currentFCQueue[currentFCIndex].id, rating);
-      currentFCIndex++;
-      renderFC();
+    // ฟังก์ชันประเมิน SRS 3 ปุ่มล่าง (แก้ปัญหาเรืองแสงค้าง 100%)
+    function handleSRS(rating, e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      try {
+        if (!currentFCQueue || currentFCQueue.length === 0) return;
+        
+        const currentItem = currentFCQueue[currentFCIndex];
+        if (currentItem && currentItem.id) {
+          srs.reviewWord(currentItem.id, rating);
+        }
+
+        currentFCIndex++;
+        renderFC();
+        updateDashboard();
+      } catch (err) {
+        console.error("Error transitioning card:", err);
+        currentFCIndex++;
+        renderFC();
+      }
     }
 
     function speakCurrentWord() {
-      if (currentFCIndex < currentFCQueue.length && 'speechSynthesis' in window) {
+      if (currentFCQueue && currentFCIndex < currentFCQueue.length && 'speechSynthesis' in window) {
         const u = new SpeechSynthesisUtterance(currentFCQueue[currentFCIndex].word);
         u.lang = 'en-US';
         window.speechSynthesis.speak(u);
@@ -584,6 +638,7 @@
 
     // Sentence Writing Controller
     function renderSentence() {
+      if (!srs.words || srs.words.length === 0) return;
       const item = srs.words[currentSentenceIndex % srs.words.length];
       document.getElementById('stIndexText').innerText = `ข้อ ${(currentSentenceIndex % srs.words.length) + 1} / ${srs.words.length}`;
       document.getElementById('stPromptTh').innerText = `"${item.sentence_th || item.example_th || ''}"`;
@@ -602,8 +657,8 @@
     function toggleHint(type) {
       const el = document.getElementById(type === 'grammar' ? 'stGrammarBox' : 'stVocabBox');
       const icon = document.getElementById(type === 'grammar' ? 'stGrammarIcon' : 'stVocabIcon');
-      el.classList.toggle('hidden');
-      icon.innerText = el.classList.contains('hidden') ? '▼' : '▲';
+      if (el) el.classList.toggle('hidden');
+      if (icon && el) icon.innerText = el.classList.contains('hidden') ? '▼' : '▲';
     }
 
     function clean(s) { 
@@ -641,6 +696,7 @@
 
     // Grammar Spotter Controller
     function renderGrammar() {
+      if (!srs.words || srs.words.length === 0) return;
       const item = srs.words[currentGrammarIndex % srs.words.length];
       document.getElementById('gmIndexText').innerText = `ข้อ ${(currentGrammarIndex % srs.words.length) + 1} / ${srs.words.length}`;
       document.getElementById('gmTargetSentence').innerText = `"${item.error_sentence || ''}"`;
