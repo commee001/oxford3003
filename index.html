@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Oxford 3000 Master - ระบบฝึกภาษาอังกฤษอัจฉริยะ</title>
+  <title>Oxford 3000 Master - ระบบฝึกคำศัพท์แบบนับรอบ</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -48,16 +48,15 @@
         </div>
         <div>
           <h1 class="text-base sm:text-lg font-bold tracking-tight text-white leading-tight">Oxford 3000 Master</h1>
-          <p class="text-xs text-indigo-400 font-medium">SRS Adaptive English Training</p>
+          <p class="text-xs text-indigo-400 font-medium">Round-Based SRS Training</p>
         </div>
       </div>
 
-      <!-- Quick Metrics Header -->
       <div class="flex items-center gap-2 sm:gap-4 text-xs sm:text-sm">
         <div class="bg-slate-800/90 px-3 py-1.5 rounded-full border border-slate-700 flex items-center gap-1.5">
-          <span class="text-amber-400">🔥</span>
-          <span class="text-slate-400 hidden sm:inline">Streak:</span>
-          <span id="streakCount" class="font-bold text-white">1 วัน</span>
+          <span class="text-amber-400">🔄</span>
+          <span class="text-slate-400 hidden sm:inline">เล่นไปแล้ว:</span>
+          <span id="streakCount" class="font-bold text-white">0 รอบ</span>
         </div>
         <div class="bg-slate-800/90 px-3 py-1.5 rounded-full border border-slate-700 flex items-center gap-1.5">
           <span class="text-emerald-400">📚</span>
@@ -68,7 +67,7 @@
     </div>
   </header>
 
-  <!-- Mobile Bottom Tab Navigation -->
+  <!-- Mobile Tab Navigation -->
   <nav class="fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-lg border-t border-slate-800 md:hidden flex justify-around py-2 px-1 shadow-2xl">
     <button onclick="switchTab('dashboard')" class="nav-btn flex flex-col items-center gap-1 px-3 py-1 rounded-xl text-indigo-400 font-medium text-xs" data-target="dashboard">
       <span class="text-lg">🏠</span>
@@ -88,16 +87,16 @@
     </button>
   </nav>
 
-  <!-- Main Content -->
+  <!-- Main Container -->
   <main class="flex-1 max-w-5xl w-full mx-auto p-4 sm:p-6">
 
-    <!-- Desktop Navigation -->
+    <!-- Desktop Nav -->
     <div class="hidden md:flex items-center justify-center gap-3 mb-6 bg-slate-900/60 p-2 rounded-2xl border border-slate-800">
       <button onclick="switchTab('dashboard')" class="desk-nav-btn px-6 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 bg-indigo-600 text-white shadow-lg shadow-indigo-600/30" data-target="dashboard">
         🏠 แดชบอร์ด & สถิติ
       </button>
       <button onclick="switchTab('flashcards')" class="desk-nav-btn px-6 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 text-slate-400 hover:text-white hover:bg-slate-800" data-target="flashcards">
-        📇 แฟลชการ์ด SRS (10 คำ/วัน)
+        📇 แฟลชการ์ด SRS (เล่นได้ไม่จำกัด)
       </button>
       <button onclick="switchTab('sentence')" class="desk-nav-btn px-6 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 text-slate-400 hover:text-white hover:bg-slate-800" data-target="sentence">
         ✍️ แต่งประโยคตามคำใบ้
@@ -112,17 +111,17 @@
       <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-950/80 via-purple-950/40 to-slate-900 p-6 sm:p-8 border border-indigo-500/30 shadow-2xl">
         <div class="relative z-10 max-w-2xl">
           <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-xs font-semibold mb-3">
-            🧠 ระบบความจำระยะยาว Ebbinghaus Forgetting Curve
+            ⚡ ระบบ Spaced Repetition แบบวนรอบอิสระ
           </span>
           <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-2 leading-snug">
-            ภารกิจประจำวันนี้: <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">10 คำใหม่ + ทบทวนคำที่ใกล้ลืม</span>
+            ชุดคำศัพท์รอบละ <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">10 คำ (เล่นซ้ำได้ต่อเนื่องทันที)</span>
           </h2>
           <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6">
-            ระบบจะตัดรอบคำศัพท์วันละ 10 คำ เมื่อท่องครบแล้วคำศัพท์จะเลื่อนวันไปข้างหน้าตามรอบทบทวนอัตโนมัติ
+            จำไม่ได้วนกลับมาในรอบหน้า (+1 รอบ) จำไม่ค่อยได้กลับมาในอีก 2-3 รอบ และจำได้แม่นเว้นไป 6-7 รอบ เล่นต่อได้เรื่อยๆ ไม่ต้องรอข้ามวัน
           </p>
           <div class="flex flex-wrap gap-3">
             <button onclick="switchTab('flashcards')" class="bg-gradient-to-r from-indigo-500 to-sky-500 hover:from-indigo-600 hover:to-sky-600 text-white font-bold px-6 py-3.5 rounded-2xl shadow-xl shadow-indigo-500/30 active:scale-95 transition-all text-sm flex items-center gap-2">
-              <span>🚀 เริ่มเรียนประจำวันนี้</span>
+              <span>🚀 เริ่มเล่นชุด 10 คำทันที</span>
             </button>
             <button onclick="reloadFromJSON()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium px-5 py-3.5 rounded-2xl transition text-xs sm:text-sm flex items-center gap-2">
               <span>🔄 โหลดคำศัพท์ใหม่จากไฟล์</span>
@@ -131,46 +130,27 @@
         </div>
       </div>
 
-      <!-- Metrics -->
+      <!-- Quick Metrics -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
         <div class="bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl">
-          <div class="text-slate-400 text-xs font-medium">คำใหม่เหลือวันนี้</div>
-          <div id="statNewToday" class="text-2xl sm:text-3xl font-black text-indigo-400 my-1 en-font">10</div>
-          <div class="text-slate-500 text-xs">เป้าหมายวันละ 10 คำ</div>
+          <div class="text-slate-400 text-xs font-medium">รอบปัจจุบัน</div>
+          <div id="statGlobalRound" class="text-2xl sm:text-3xl font-black text-indigo-400 my-1 en-font">1</div>
+          <div class="text-slate-500 text-xs">นับสะสมตามการเล่นจริง</div>
         </div>
         <div class="bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl">
-          <div class="text-slate-400 text-xs font-medium">ต้องทบทวนวันนี้</div>
-          <div id="statDueToday" class="text-2xl sm:text-3xl font-black text-amber-400 my-1 en-font">0</div>
-          <div class="text-slate-500 text-xs">คำเก่าตามสูตร SRS</div>
+          <div class="text-slate-400 text-xs font-medium">คำที่รอทวนรอบนี้</div>
+          <div id="statDueRounds" class="text-2xl sm:text-3xl font-black text-amber-400 my-1 en-font">0</div>
+          <div class="text-slate-500 text-xs">ถึงคิวทบทวนตามสูตร</div>
         </div>
         <div class="bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl">
-          <div class="text-slate-400 text-xs font-medium">จำได้แม่นยำแล้ว</div>
-          <div id="statMastered" class="text-2xl sm:text-3xl font-black text-emerald-400 my-1 en-font">0</div>
-          <div class="text-slate-500 text-xs">ทวนผ่านเกิน 4 รอบ</div>
+          <div class="text-slate-400 text-xs font-medium">คำใหม่ที่ยังไม่เคยเจอ</div>
+          <div id="statNewPool" class="text-2xl sm:text-3xl font-black text-emerald-400 my-1 en-font">0</div>
+          <div class="text-slate-500 text-xs">พร้อมดึงมาเติมรอบละ 10 คำ</div>
         </div>
         <div class="bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl">
           <div class="text-slate-400 text-xs font-medium">คะแนนแต่งประโยค</div>
           <div id="statSentenceScore" class="text-2xl sm:text-3xl font-black text-sky-400 my-1 en-font">0</div>
           <div class="text-slate-500 text-xs">ประโยคที่ถูกต้อง</div>
-        </div>
-      </div>
-
-      <!-- Modes Navigation -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div onclick="switchTab('flashcards')" class="group cursor-pointer bg-slate-900 border border-slate-800 hover:border-indigo-500/50 p-6 rounded-2xl transition">
-          <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">📇</div>
-          <h3 class="text-base sm:text-lg font-bold text-white mb-1">โหมดแฟลชการ์ด SRS</h3>
-          <p class="text-slate-400 text-xs leading-relaxed">ท่องศัพท์วันละ 10 คำ พร้อมระบบดึงคำเก่าที่ใกล้ลืมมาทบทวนตรงจังหวะ</p>
-        </div>
-        <div onclick="switchTab('sentence')" class="group cursor-pointer bg-slate-900 border border-slate-800 hover:border-sky-500/50 p-6 rounded-2xl transition">
-          <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">✍️</div>
-          <h3 class="text-base sm:text-lg font-bold text-white mb-1">โหมดแต่งประโยค</h3>
-          <p class="text-slate-400 text-xs leading-relaxed">มีโจทย์ภาษาไทยให้ พร้อมปุ่มกดดูคำใบ้โครงสร้างและคำศัพท์เมื่อนึกไม่ออก</p>
-        </div>
-        <div onclick="switchTab('grammar')" class="group cursor-pointer bg-slate-900 border border-slate-800 hover:border-emerald-500/50 p-6 rounded-2xl transition">
-          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">🔍</div>
-          <h3 class="text-base sm:text-lg font-bold text-white mb-1">โหมดจับผิดแกรมมา</h3>
-          <p class="text-slate-400 text-xs leading-relaxed">ค้นหาจุดที่ไวยากรณ์ผิดและพิมพ์แก้ไขให้ถูกต้อง พร้อมคำอธิบายหลักภาษา</p>
         </div>
       </div>
     </section>
@@ -179,8 +159,8 @@
     <section id="view-flashcards" class="hidden max-w-xl mx-auto space-y-5">
       <div class="flex items-center justify-between text-xs sm:text-sm text-slate-400 px-1">
         <div>
-          <span>คิวเรียนวันนี้: </span>
-          <span id="fcProgressText" class="font-bold text-indigo-400 en-font">0 / 0</span>
+          <span>ความคืบหน้าชุดนี้: </span>
+          <span id="fcProgressText" class="font-bold text-indigo-400 en-font">1 / 10</span>
         </div>
         <div id="fcTypeTag" class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">
           คำใหม่ (New)
@@ -216,7 +196,7 @@
             </div>
 
             <p class="text-slate-500 text-xs flex items-center gap-1 mt-auto">
-              <span>ประเมินความจำเพื่อจัดคิวรอบต่อไป ⬇️</span>
+              <span>ประเมินเพื่อกำหนดรอบถัดไป ⬇️</span>
             </p>
           </div>
         </div>
@@ -226,15 +206,21 @@
       <div id="srsControls" class="grid grid-cols-3 gap-2.5 pt-2">
         <button onclick="handleSRS(1)" class="flex flex-col items-center justify-center p-3 sm:p-4 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-300 font-bold transition active:scale-95">
           <span class="text-base sm:text-lg">❌ จำไม่ได้</span>
-          <span class="text-[10px] text-rose-400 font-normal">ทวนใหม่พรุ่งนี้</span>
+          <span class="text-[10px] text-rose-400 font-normal">เจอกันรอบหน้า (+1)</span>
         </button>
         <button onclick="handleSRS(3)" class="flex flex-col items-center justify-center p-3 sm:p-4 rounded-2xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 font-bold transition active:scale-95">
           <span class="text-base sm:text-lg">🤔 เกือบจำได้</span>
-          <span class="text-[10px] text-amber-400 font-normal">ทวนใน 2-3 วัน</span>
+          <span class="text-[10px] text-amber-400 font-normal">เว้น 2-3 รอบ</span>
         </button>
         <button onclick="handleSRS(5)" class="flex flex-col items-center justify-center p-3 sm:p-4 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 font-bold transition active:scale-95">
           <span class="text-base sm:text-lg">✨ จำได้แม่น</span>
-          <span class="text-[10px] text-emerald-400 font-normal">ทวนใน 5-7 วัน</span>
+          <span class="text-[10px] text-emerald-400 font-normal">เว้น 6-7 รอบ</span>
+        </button>
+      </div>
+
+      <div id="finishSetControls" class="hidden flex flex-col gap-3 pt-2">
+        <button onclick="setupFlashcards()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-400 text-white font-bold text-base shadow-xl active:scale-98 transition">
+          🚀 ลุยต่อชุดถัดไปทันที (10 คำใหม่/ทวน)
         </button>
       </div>
 
@@ -339,9 +325,7 @@
 
   </main>
 
-  <!-- LOGIC SCRIPT -->
   <script>
-    // 10 Starter Seed Words
     const SEED_DATA = [
       { id: 1, word: "abandon", pos: "verb", meaning: "ละทิ้ง, ทอดทิ้ง, ยกเลิก", example_en: "They had to abandon the burning ship.", example_th: "พวกเขาจำต้องละทิ้งเรือที่กำลังลุกไหม้", sentence_th: "เขาต้องละทิ้งความฝันนี้ไปในที่สุด", sentence_en: "He had to abandon this dream in the end.", sentence_alt: ["He had to abandon this dream eventually."], grammar_hint: "Subject + had to + V.infinitive + Object", vocab_hint: "ละทิ้ง = abandon | ความฝัน = dream | ในที่สุด = in the end", error_sentence: "He had to abandoned this dream in the end.", error_wrong: "abandoned", error_correct: "abandon", error_explain: "หลัง had to กริยาต้องเป็น Infinitive ไม่ผัน" },
       { id: 2, word: "ability", pos: "noun", meaning: "ความสามารถ, ศักยภาพ", example_en: "She has the ability to manage large teams.", example_th: "เธอมีความสามารถในการบริหารทีมขนาดใหญ่", sentence_th: "เขามีความสามารถในการพูดได้สามภาษา", sentence_en: "He has the ability to speak three languages.", sentence_alt: ["He has the ability to speak 3 languages."], grammar_hint: "Subject + has the ability + to + V.inf", vocab_hint: "ความสามารถ = ability | พูด = speak | สามภาษา = three languages", error_sentence: "She don't have the ability to speak French.", error_wrong: "don't", error_correct: "doesn't", error_explain: "ประธานเอกพจน์บุรุษที่ 3 (She) ใน Present Simple Tense ปฏิเสธต้องใช้ doesn't" },
@@ -355,21 +339,12 @@
       { id: 10, word: "acquire", pos: "verb", meaning: "ได้รับมา, ครอบครอง, เรียนรู้ทักษะ", example_en: "He acquired a reputation as an expert.", example_th: "เขาได้รับชื่อเสียงในฐานะผู้เชี่ยวชาญ", sentence_th: "เด็กๆ ได้รับทักษะทางภาษาอย่างรวดเร็ว", sentence_en: "Children acquire language skills quickly.", sentence_alt: ["Children acquire language skills very fast."], grammar_hint: "Subject (Plural) + V.1 + Noun phrase + Adverb", vocab_hint: "ได้รับ/พัฒนา = acquire | ทักษะภาษา = language skills | รวดเร็ว = quickly", error_sentence: "She want to acquire new computer skills.", error_wrong: "want", error_correct: "wants", error_explain: "ประธาน She เป็นเอกพจน์ กริยา want ต้องเติม -s" }
     ];
 
-    // Helper: แปลงเวลาท้องถิ่นเป็นสตริง YYYY-MM-DD แบบไม่คลาดเคลื่อน Timezone
-    function getLocalDateString(dateObj = new Date()) {
-      const year = dateObj.getFullYear();
-      const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-      const day = String(dateObj.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
-    }
-
-    class SRSEngine {
+    class RoundBasedSRSEngine {
       constructor() {
-        this.STORAGE_KEY = 'oxford3000_srs_data';
-        this.USER_STATS_KEY = 'oxford3000_user_stats';
+        this.STORAGE_KEY = 'oxford3000_round_srs_data';
+        this.STATS_KEY = 'oxford3000_round_stats';
         this.stats = this.loadStats();
         this.words = this.loadWords();
-        this.checkDayStreak();
       }
 
       loadWords() {
@@ -379,13 +354,7 @@
         }
         return SEED_DATA.map(w => ({
           ...w,
-          srs: { 
-            repetitions: 0, 
-            interval: 0, 
-            easeFactor: 2.5, 
-            nextReviewDate: getLocalDateString(), 
-            isNew: true 
-          }
+          srs: { repetitions: 0, nextReviewRound: 1, isNew: true }
         }));
       }
 
@@ -394,94 +363,75 @@
       }
 
       loadStats() {
-        const todayStr = getLocalDateString();
-        const def = { streak: 1, lastDate: todayStr, sentenceScore: 0, learnedTodayCount: 0 };
-        const stored = localStorage.getItem(this.USER_STATS_KEY);
+        const def = { currentRound: 1, sentenceScore: 0, completedBatches: 0 };
+        const stored = localStorage.getItem(this.STATS_KEY);
         return stored ? { ...def, ...JSON.parse(stored) } : def;
       }
 
       saveStats() { 
-        localStorage.setItem(this.USER_STATS_KEY, JSON.stringify(this.stats)); 
-      }
-
-      checkDayStreak() {
-        const todayStr = getLocalDateString();
-        if (this.stats.lastDate !== todayStr) {
-          const last = new Date(this.stats.lastDate);
-          const today = new Date(todayStr);
-          const diffDays = Math.round((today - last) / (1000 * 60 * 60 * 24));
-
-          if (diffDays === 1) {
-            this.stats.streak += 1;
-          } else if (diffDays > 1) {
-            this.stats.streak = 1;
-          }
-          this.stats.lastDate = todayStr;
-          this.stats.learnedTodayCount = 0; // รีเซ็ตโควตาการเรียนเมื่อขึ้นวันใหม่
-          this.saveStats();
-        }
+        localStorage.setItem(this.STATS_KEY, JSON.stringify(this.stats)); 
       }
 
       reviewWord(id, rating) {
         const word = this.words.find(w => w.id === id);
         if (!word) return;
 
-        let { repetitions, interval, easeFactor, isNew } = word.srs;
+        let { repetitions } = word.srs;
+        let addRounds = 1;
 
-        if (rating < 3) {
+        if (rating === 1) {
+          // ❌ จำไม่ได้ -> รอบต่อไปมาทันที (+1 รอบ)
           repetitions = 0;
-          interval = 1; // จำไม่ได้ -> ทบทวนใหม่อีก 1 วัน
-        } else {
-          if (repetitions === 0) interval = 1;
-          else if (repetitions === 1) interval = 3;
-          else if (repetitions === 2) interval = 6;
-          else interval = Math.round(interval * easeFactor);
+          addRounds = 1;
+        } else if (rating === 3) {
+          // 🤔 เกือบจำได้ -> อีก 2-3 รอบข้างหน้าสุ่ม (+2 ถึง +3 รอบ)
           repetitions++;
+          addRounds = Math.floor(Math.random() * 2) + 2; 
+        } else if (rating === 5) {
+          // ✨ จำได้แม่น -> อีก 6-7 รอบค่อยมา (+6 ถึง +7 รอบ)
+          repetitions++;
+          addRounds = Math.floor(Math.random() * 2) + 6; 
         }
-
-        easeFactor = Math.max(1.3, easeFactor + (0.1 - (5 - rating) * (0.08 + (5 - rating) * 0.02)));
-
-        // เลื่อนวันทบทวนถัดไปอย่างแม่นยำ
-        const nextDate = new Date();
-        nextDate.setDate(nextDate.getDate() + interval);
 
         word.srs = {
           repetitions,
-          interval,
-          easeFactor: Number(easeFactor.toFixed(2)),
-          nextReviewDate: getLocalDateString(nextDate),
-          isNew: false // เปลี่ยนสถานะเป็นคำที่เคยเรียนแล้ว
+          nextReviewRound: this.stats.currentRound + addRounds,
+          isNew: false
         };
-
-        if (isNew) {
-          this.stats.learnedTodayCount = (this.stats.learnedTodayCount || 0) + 1;
-          this.saveStats();
-        }
 
         this.saveWords();
       }
 
-      getTodayQueue() {
-        const todayStr = getLocalDateString();
-        
-        // 1. คำเก่าที่ครบกำหนดทบทวนในวันนี้หรือค้างมา
-        const dueWords = this.words.filter(w => !w.srs.isNew && w.srs.nextReviewDate <= todayStr);
-        
-        // 2. คำใหม่ตามโควตาคงเหลือ (สูงสุด 10 คำต่อวัน)
-        const remainingQuota = Math.max(0, 10 - (this.stats.learnedTodayCount || 0));
-        const newWords = this.words.filter(w => w.srs.isNew).slice(0, remainingQuota);
+      // ดึง 10 คำสำหรับรอบนี้ (คำที่ครบกำหนดทบทวนรอบนี้ + คำใหม่)
+      getBatchQueue() {
+        const cRound = this.stats.currentRound;
 
-        return [...dueWords, ...newWords];
+        // 1. คำที่ถึงรอบทบทวน (nextReviewRound <= cRound)
+        const dueWords = this.words.filter(w => !w.srs.isNew && w.srs.nextReviewRound <= cRound);
+
+        // 2. เติมด้วยคำใหม่จนครบ 10 คำ
+        const needed = Math.max(0, 10 - dueWords.length);
+        const newWords = this.words.filter(w => w.srs.isNew).slice(0, needed);
+
+        let queue = [...dueWords, ...newWords];
+
+        // หากยังไม่ครบ 10 คำและไม่มีคำใหม่เหลือ ให้วนคำที่ใกล้ถึงรอบมาช่วยทบทวน
+        if (queue.length < 10) {
+          const remaining = 10 - queue.length;
+          const others = this.words.filter(w => !queue.some(q => q.id === w.id)).slice(0, remaining);
+          queue = [...queue, ...others];
+        }
+
+        return queue.slice(0, 10);
       }
     }
 
-    const srs = new SRSEngine();
+    const srs = new RoundBasedSRSEngine();
     let currentFCIndex = 0;
     let currentFCQueue = [];
     let currentSentenceIndex = 0;
     let currentGrammarIndex = 0;
 
-    // อัปเดตข้อมูลจาก oxford3000.json
     async function loadJsonDatabase() {
       try {
         const res = await fetch('./oxford3000.json');
@@ -497,20 +447,14 @@
               return {
                 ...item,
                 id: item.id || (idx + 1),
-                srs: { 
-                  repetitions: 0, 
-                  interval: 0, 
-                  easeFactor: 2.5, 
-                  nextReviewDate: getLocalDateString(), 
-                  isNew: true 
-                }
+                srs: { repetitions: 0, nextReviewRound: 1, isNew: true }
               };
             });
             srs.saveWords();
           }
         }
       } catch (e) {
-        console.log("Using seed or local database");
+        console.log("Using local database");
       }
       updateDashboard();
     }
@@ -523,18 +467,13 @@
         srs.words = list.map((item, idx) => ({
           ...item,
           id: item.id || (idx + 1),
-          srs: { 
-            repetitions: 0, 
-            interval: 0, 
-            easeFactor: 2.5, 
-            nextReviewDate: getLocalDateString(), 
-            isNew: true 
-          }
+          srs: { repetitions: 0, nextReviewRound: 1, isNew: true }
         }));
-        srs.stats.learnedTodayCount = 0;
+        srs.stats.currentRound = 1;
+        srs.stats.completedBatches = 0;
         srs.saveStats();
         srs.saveWords();
-        alert(`โหลดคำศัพท์จาก oxford3000.json สำเร็จ! ทั้งหมด ${srs.words.length} คำ`);
+        alert(`โหลดคำศัพท์จาก oxford3000.json สำเร็จ! ทั้งหมด ${srs.words.length} คำ เริ่มรอบที่ 1`);
         updateDashboard();
       } catch (err) {
         alert("ไม่พบไฟล์ oxford3000.json หรือรูปแบบ JSON ไม่ถูกต้อง");
@@ -567,23 +506,23 @@
     }
 
     function updateDashboard() {
-      const todayStr = getLocalDateString();
-      const due = srs.words.filter(w => !w.srs.isNew && w.srs.nextReviewDate <= todayStr).length;
-      const newRemaining = Math.max(0, 10 - (srs.stats.learnedTodayCount || 0));
-      const mastered = srs.words.filter(w => w.srs.repetitions >= 4).length;
+      const cRound = srs.stats.currentRound;
+      const due = srs.words.filter(w => !w.srs.isNew && w.srs.nextReviewRound <= cRound).length;
+      const newPool = srs.words.filter(w => w.srs.isNew).length;
 
       document.getElementById('totalWordCount').innerText = srs.words.length;
-      document.getElementById('statNewToday').innerText = newRemaining;
-      document.getElementById('statDueToday').innerText = due;
-      document.getElementById('statMastered').innerText = mastered;
+      document.getElementById('statGlobalRound').innerText = cRound;
+      document.getElementById('statDueRounds').innerText = due;
+      document.getElementById('statNewPool').innerText = newPool;
       document.getElementById('statSentenceScore').innerText = srs.stats.sentenceScore || 0;
-      document.getElementById('streakCount').innerText = `${srs.stats.streak} วัน`;
+      document.getElementById('streakCount').innerText = `${srs.stats.completedBatches || 0} รอบ`;
     }
 
-    // Flashcards Controller
     function setupFlashcards() {
-      currentFCQueue = srs.getTodayQueue();
+      currentFCQueue = srs.getBatchQueue();
       currentFCIndex = 0;
+      document.getElementById('finishSetControls').classList.add('hidden');
+      document.getElementById('srsControls').style.display = 'grid';
       renderFC();
     }
 
@@ -592,20 +531,25 @@
       box.classList.remove('flipped');
 
       if (currentFCQueue.length === 0 || currentFCIndex >= currentFCQueue.length) {
+        // จบ 10 คำของชุดนี้ -> เพิ่มเลขรอบของระบบขึ้น 1 รอบทันที
+        srs.stats.currentRound += 1;
+        srs.stats.completedBatches = (srs.stats.completedBatches || 0) + 1;
+        srs.saveStats();
+        updateDashboard();
+
         document.getElementById('fcWord').innerText = "🎉 ยอดเยี่ยม!";
-        document.getElementById('fcPos').innerText = "Mission Completed";
-        document.getElementById('fcMeaning').innerText = "คุณทบทวนคำศัพท์ประจำวันนี้เสร็จสิ้นแล้ว";
-        document.getElementById('fcExampleEn').innerText = "Keep up the great work!";
-        document.getElementById('fcExampleTh').innerText = "ระบบได้เลื่อนวันทบทวนสำหรับคำศัพท์ชุดนี้แล้ว พักผ่อนได้เลยครับ";
-        document.getElementById('fcProgressText').innerText = `${currentFCQueue.length} / ${currentFCQueue.length}`;
+        document.getElementById('fcPos').innerText = "Batch Complete";
+        document.getElementById('fcMeaning').innerText = `จบชุด 10 คำเรียบร้อย! (เข้าสู่รอบที่ ${srs.stats.currentRound})`;
+        document.getElementById('fcExampleEn').innerText = "คำศัพท์ได้รับการจัดคิวตามรอบทวนใหม่เรียบร้อย";
+        document.getElementById('fcExampleTh').innerText = "กดปุ่มด้านล่างเพื่อลุยชุด 10 คำต่อไปได้ทันที";
+        document.getElementById('fcProgressText').innerText = `10 / 10`;
         document.getElementById('fcProgressBar').style.width = '100%';
         document.getElementById('srsControls').style.display = 'none';
+        document.getElementById('finishSetControls').classList.remove('hidden');
         return;
       }
 
-      document.getElementById('srsControls').style.display = 'grid';
       const item = currentFCQueue[currentFCIndex];
-      
       document.getElementById('fcWord').innerText = item.word;
       document.getElementById('fcPos').innerText = item.pos || 'word';
       document.getElementById('fcMeaning').innerText = item.meaning || "";
@@ -628,7 +572,6 @@
       srs.reviewWord(currentFCQueue[currentFCIndex].id, rating);
       currentFCIndex++;
       renderFC();
-      updateDashboard();
     }
 
     function speakCurrentWord() {
