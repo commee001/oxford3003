@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Oxford 3000 Master - ระบบฝึกคำศัพท์แบบนับรอบ</title>
+  <title>Oxford 3000 Master - ระบบฝึกคำศัพท์คละหมวดอักษร</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -48,14 +48,14 @@
         </div>
         <div>
           <h1 class="text-base sm:text-lg font-bold tracking-tight text-white leading-tight">Oxford 3000 Master</h1>
-          <p class="text-xs text-indigo-400 font-medium">Loop-Based Adaptive SRS</p>
+          <p class="text-xs text-indigo-400 font-medium">Multi-Alphabet Smart Loop SRS</p>
         </div>
       </div>
 
       <div class="flex items-center gap-2 sm:gap-4 text-xs sm:text-sm">
         <div class="bg-slate-800/90 px-3 py-1.5 rounded-full border border-slate-700 flex items-center gap-1.5">
           <span class="text-amber-400">🔄</span>
-          <span class="text-slate-400 hidden sm:inline">เล่นจบไปแล้ว:</span>
+          <span class="text-slate-400 hidden sm:inline">เล่นจบ:</span>
           <span id="streakCount" class="font-bold text-white">0 ชุด</span>
         </div>
         <div class="bg-slate-800/90 px-3 py-1.5 rounded-full border border-slate-700 flex items-center gap-1.5">
@@ -96,7 +96,7 @@
         🏠 แดชบอร์ด & สถิติ
       </button>
       <button onclick="switchTab('flashcards')" class="desk-nav-btn px-6 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 text-slate-400 hover:text-white hover:bg-slate-800" data-target="flashcards">
-        📇 แฟลชการ์ด SRS (รอบละ 10 คำ)
+        📇 แฟลชการ์ด SRS (สุ่มคละหมวด A-Z)
       </button>
       <button onclick="switchTab('sentence')" class="desk-nav-btn px-6 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 text-slate-400 hover:text-white hover:bg-slate-800" data-target="sentence">
         ✍️ แต่งประโยคตามคำใบ้
@@ -111,13 +111,15 @@
       <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-950/80 via-purple-950/40 to-slate-900 p-6 sm:p-8 border border-indigo-500/30 shadow-2xl">
         <div class="relative z-10 max-w-2xl">
           <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-xs font-semibold mb-3">
-            ⚡ Spaced Repetition แบบวนรอบอิสระ (เล่นซ้ำต่อเนื่องได้ทันที)
+            🎲 ระบบสุ่มคละหมวดอักษร A–Z + จำแม่นเว้น 9-10 รอบ
           </span>
           <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-2 leading-snug">
-            ภารกิจ: <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">ชุดละ 10 คำ (ดึงคำใหม่ต่อเนื่อง)</span>
+            ชุดละ 10 คำ: <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400">กระจายคำศัพท์ ไม่เจอซ้ำหมวดเดิม</span>
           </h2>
           <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6">
-            ระบบจัดคิวคำใหม่ขึ้นมาให้เรียนเรื่อยๆ จนกว่าจะหมดคลังคำศัพท์ พร้อมแทรกคำเก่าที่ถึงรอบทบทวนให้อัตโนมัติ
+            ❌ จำไม่ได้: โผล่มาทวนทันทีในรอบหน้า (+1 รอบ)<br>
+            🤔 เกือบจำได้: เว้น 3–4 รอบค่อยวนมา<br>
+            ✨ จำได้แม่น: ยืดเวลาเว้นไป <strong>9–10 รอบ</strong> ถึงจะดึงกลับมาทวน
           </p>
           <div class="flex flex-wrap gap-3">
             <button onclick="switchTab('flashcards')" class="bg-gradient-to-r from-indigo-500 to-sky-500 hover:from-indigo-600 hover:to-sky-600 text-white font-bold px-6 py-3.5 rounded-2xl shadow-xl shadow-indigo-500/30 active:scale-95 transition-all text-sm flex items-center gap-2">
@@ -125,6 +127,9 @@
             </button>
             <button onclick="reloadFromJSON()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium px-5 py-3.5 rounded-2xl transition text-xs sm:text-sm flex items-center gap-2">
               <span>🔄 โหลดคำศัพท์ใหม่จากไฟล์</span>
+            </button>
+            <button onclick="resetAllProgress()" class="bg-rose-950/40 hover:bg-rose-900/50 text-rose-300 border border-rose-800/40 font-medium px-4 py-3.5 rounded-2xl transition text-xs flex items-center gap-1.5">
+              <span>🧹 ล้างข้อมูลเริ่มใหม่ทั้งหมด</span>
             </button>
           </div>
         </div>
@@ -145,7 +150,7 @@
         <div class="bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl">
           <div class="text-slate-400 text-xs font-medium">คำใหม่ที่ยังไม่ได้เรียน</div>
           <div id="statNewPool" class="text-2xl sm:text-3xl font-black text-emerald-400 my-1 en-font">0</div>
-          <div class="text-slate-500 text-xs">รอเข้าคิวเรียนรอบละ 10 คำ</div>
+          <div class="text-slate-500 text-xs">รอสุ่มคละเข้าชุด 10 คำ</div>
         </div>
         <div class="bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl">
           <div class="text-slate-400 text-xs font-medium">คะแนนแต่งประโยค</div>
@@ -177,8 +182,8 @@
           <!-- Front -->
           <div class="card-front bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-indigo-500/30 p-8">
             <span class="text-xs uppercase tracking-wider text-slate-500 font-semibold mb-2">Oxford 3000 Vocabulary</span>
-            <div id="fcWord" class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight en-font mb-2">abandon</div>
-            <div id="fcPos" class="px-3 py-1 rounded-full bg-slate-800 text-indigo-400 text-xs font-semibold en-font mb-6">verb</div>
+            <div id="fcWord" class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight en-font mb-2">...</div>
+            <div id="fcPos" class="px-3 py-1 rounded-full bg-slate-800 text-indigo-400 text-xs font-semibold en-font mb-6">...</div>
             <p class="text-slate-500 text-xs flex items-center gap-1.5 mt-auto">
               <span>👆 แตะเพื่อพลิกดูคำแปลและตัวอย่าง</span>
             </p>
@@ -187,7 +192,7 @@
           <!-- Back -->
           <div class="card-back bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-sky-500/40 p-6 sm:p-8">
             <span class="text-xs uppercase tracking-wider text-sky-400 font-semibold mb-1">ความหมายภาษาไทย</span>
-            <div id="fcMeaning" class="text-2xl sm:text-3xl font-bold text-white mb-4">ละทิ้ง, ทอดทิ้ง, ยกเลิก</div>
+            <div id="fcMeaning" class="text-2xl sm:text-3xl font-bold text-white mb-4">...</div>
             
             <div class="w-full bg-slate-800/80 p-4 rounded-xl border border-slate-700 text-left my-auto space-y-2">
               <div class="text-xs text-slate-400 font-semibold">ตัวอย่างประโยค:</div>
@@ -202,7 +207,7 @@
         </div>
       </div>
 
-      <!-- SRS Controls (Action Buttons) -->
+      <!-- Action Buttons -->
       <div id="srsControls" class="grid grid-cols-3 gap-2.5 pt-2">
         <button type="button" onclick="handleSRS(1, event)" class="flex flex-col items-center justify-center p-3 sm:p-4 rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 active:bg-rose-500/30 border border-rose-500/30 text-rose-300 font-bold transition active:scale-95 cursor-pointer">
           <span class="text-base sm:text-lg">❌ จำไม่ได้</span>
@@ -210,18 +215,18 @@
         </button>
         <button type="button" onclick="handleSRS(3, event)" class="flex flex-col items-center justify-center p-3 sm:p-4 rounded-2xl bg-amber-500/10 hover:bg-amber-500/20 active:bg-amber-500/30 border border-amber-500/30 text-amber-300 font-bold transition active:scale-95 cursor-pointer">
           <span class="text-base sm:text-lg">🤔 เกือบจำได้</span>
-          <span class="text-[10px] text-amber-400 font-normal">เว้น 2-3 รอบ</span>
+          <span class="text-[10px] text-amber-400 font-normal">เว้น 3-4 รอบ</span>
         </button>
         <button type="button" onclick="handleSRS(5, event)" class="flex flex-col items-center justify-center p-3 sm:p-4 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500/20 active:bg-emerald-500/30 border border-emerald-500/30 text-emerald-300 font-bold transition active:scale-95 cursor-pointer">
           <span class="text-base sm:text-lg">✨ จำได้แม่น</span>
-          <span class="text-[10px] text-emerald-400 font-normal">เว้น 6-7 รอบ</span>
+          <span class="text-[10px] text-emerald-400 font-normal">เว้น 9-10 รอบ</span>
         </button>
       </div>
 
-      <!-- Batch Completed Screen Controls -->
+      <!-- Finish Screen Controls -->
       <div id="finishSetControls" class="hidden flex flex-col gap-3 pt-2">
         <button type="button" onclick="setupFlashcards()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-400 hover:from-indigo-600 hover:to-emerald-500 text-white font-bold text-base shadow-xl active:scale-98 transition cursor-pointer">
-          🚀 ลุยต่อชุดถัดไปทันที (ดึง 10 คำใหม่)
+          🚀 ลุยต่อชุดถัดไปทันที (สุ่มคำใหม่คละหมวด A-Z)
         </button>
       </div>
 
@@ -327,23 +332,69 @@
   </main>
 
   <script>
-    const SEED_DATA = [
-      { id: 1, word: "abandon", pos: "verb", meaning: "ละทิ้ง, ทอดทิ้ง, ยกเลิก", example_en: "They had to abandon the burning ship.", example_th: "พวกเขาจำต้องละทิ้งเรือที่กำลังลุกไหม้", sentence_th: "เขาต้องละทิ้งความฝันนี้ไปในที่สุด", sentence_en: "He had to abandon this dream in the end.", sentence_alt: ["He had to abandon this dream eventually."], grammar_hint: "Subject + had to + V.infinitive + Object", vocab_hint: "ละทิ้ง = abandon | ความฝัน = dream | ในที่สุด = in the end", error_sentence: "He had to abandoned this dream in the end.", error_wrong: "abandoned", error_correct: "abandon", error_explain: "หลัง had to กริยาต้องเป็น Infinitive ไม่ผัน" },
-      { id: 2, word: "ability", pos: "noun", meaning: "ความสามารถ, ศักยภาพ", example_en: "She has the ability to manage large teams.", example_th: "เธอมีความสามารถในการบริหารทีมขนาดใหญ่", sentence_th: "เขามีความสามารถในการพูดได้สามภาษา", sentence_en: "He has the ability to speak three languages.", sentence_alt: ["He has the ability to speak 3 languages."], grammar_hint: "Subject + has the ability + to + V.inf", vocab_hint: "ความสามารถ = ability | พูด = speak | สามภาษา = three languages", error_sentence: "She don't have the ability to speak French.", error_wrong: "don't", error_correct: "doesn't", error_explain: "ประธานเอกพจน์บุรุษที่ 3 (She) ใน Present Simple Tense ปฏิเสธต้องใช้ doesn't" },
-      { id: 3, word: "absolute", pos: "adjective", meaning: "เด็ดขาด, แน่นอน, สมบูรณ์แบบ", example_en: "I have absolute confidence in your skills.", example_th: "ฉันมีความมั่นใจในทักษะของคุณอย่างแท้จริง", sentence_th: "เราต้องการความเงียบสงบอย่างสมบูรณ์ในห้องสอบ", sentence_en: "We need absolute silence in the exam room.", sentence_alt: ["We need absolute silence in the examination room."], grammar_hint: "Subject + need + Adjective + Noun", vocab_hint: "สมบูรณ์ = absolute | ความเงียบ = silence | ห้องสอบ = exam room", error_sentence: "We need an absolutely silence during the test.", error_wrong: "absolutely", error_correct: "absolute", error_explain: "silence เป็นคำนาม คำขยายหน้าคำนามต้องเป็น Adjective (absolute)" },
-      { id: 4, word: "academic", pos: "adjective", meaning: "ทางวิชาการ, เชิงวิชาการ", example_en: "He achieved high academic success this year.", example_th: "เขาประสบความสำเร็จทางวิชาการระดับสูงในปีนี้", sentence_th: "โรงเรียนนี้เน้นมาตรฐานทางวิชาการ", sentence_en: "This school focuses on academic standards.", sentence_alt: ["This school emphasizes academic standards."], grammar_hint: "Subject (Singular) + focuses on + Adjective + Noun plural", vocab_hint: "เน้น = focus on | วิชาการ = academic | มาตรฐาน = standards", error_sentence: "This university has high academically standards.", error_wrong: "academically", error_correct: "academic", error_explain: "standards เป็นคำนาม ต้องขยายด้วยคุณศัพท์ (academic)" },
-      { id: 5, word: "acceptable", pos: "adjective", meaning: "ยอมรับได้, เป็นที่ยอมรับ", example_en: "This solution is acceptable to everyone.", example_th: "ทางออกนี้เป็นที่ยอมรับได้สำหรับทุกคน", sentence_th: "พฤติกรรมของเขาไม่เป็นที่ยอมรับในห้องเรียน", sentence_en: "His behavior is not acceptable in the classroom.", sentence_alt: ["His behaviour is not acceptable in the classroom."], grammar_hint: "Subject + is not + Adjective + Preposition phrase", vocab_hint: "พฤติกรรม = behavior | ยอมรับได้ = acceptable | ห้องเรียน = classroom", error_sentence: "His behavior is not acceptably in school.", error_wrong: "acceptably", error_correct: "acceptable", error_explain: "หลัง Verb to be (is) ต้องตามด้วย Adjective (acceptable)" },
-      { id: 6, word: "accompany", pos: "verb", meaning: "ไปเป็นเพื่อน, ประกอบกับ", example_en: "Children must be accompanied by an adult.", example_th: "เด็กๆ จะต้องมีผู้ใหญ่ร่วมเดินทางไปด้วย", sentence_th: "ฉันจะไปเป็นเพื่อนคุณที่โรงพยาบาลพรุ่งนี้", sentence_en: "I will accompany you to the hospital tomorrow.", sentence_alt: ["I'll accompany you to the hospital tomorrow."], grammar_hint: "Subject + will + V.infinitive + Object + time", vocab_hint: "ไปเป็นเพื่อน = accompany | โรงพยาบาล = hospital | พรุ่งนี้ = tomorrow", error_sentence: "He accompany his sister to the doctor yesterday.", error_wrong: "accompany", error_correct: "accompanied", error_explain: "yesterday เป็นอดีต กริยาต้องเปลี่ยนเป็นช่อง 2 (accompanied)" },
-      { id: 7, word: "accurate", pos: "adjective", meaning: "แม่นยำ, ถูกต้องชัดเจน", example_en: "The weather forecast was remarkably accurate.", example_th: "การพยากรณ์อากาศมีความแม่นยำอย่างน่าทึ่ง", sentence_th: "ข้อมูลนี้ถูกต้องและเชื่อถือได้", sentence_en: "This information is accurate and reliable.", sentence_alt: ["This data is accurate and reliable."], grammar_hint: "Subject (uncountable) + is + Adjective 1 and Adjective 2", vocab_hint: "ข้อมูล = information | แม่นยำ = accurate | เชื่อถือได้ = reliable", error_sentence: "These informations are accurate and reliable.", error_wrong: "informations", error_correct: "information", error_explain: "information เป็นนามนับไม่ได้ ห้ามเติม -s และใช้รูปเอกพจน์" },
-      { id: 8, word: "achieve", pos: "verb", meaning: "บรรลุผล, สำเร็จ, ได้รับ", example_en: "She worked hard to achieve her goals.", example_th: "เธอทำงานหนักเพื่อที่จะบรรลุเป้าหมายของเธอ", sentence_th: "คุณสามารถบรรลุเป้าหมายได้หากคุณพยายาม", sentence_en: "You can achieve your goal if you try.", sentence_alt: ["You can achieve your goals if you try."], grammar_hint: "Subject + can + V.inf + Object + if clause", vocab_hint: "บรรลุ = achieve | เป้าหมาย = goal / goals | พยายาม = try", error_sentence: "He has achieve great success in business.", error_wrong: "achieve", error_correct: "achieved", error_explain: "หลังโครงสร้าง Present Perfect (has) กริยาต้องเป็นช่อง 3 (achieved)" },
-      { id: 9, word: "acknowledge", pos: "verb", meaning: "ยอมรับ, รับรู้, ขอบคุณ", example_en: "He refused to acknowledge his mistake.", example_th: "เขาปฏิเสธที่จะยอมรับความผิดพลาดของตัวเอง", sentence_th: "พวกเขาต้องยอมรับความจริงข้อนี้", sentence_en: "They must acknowledge this fact.", sentence_alt: ["They have to acknowledge this truth."], grammar_hint: "Subject + must + V.inf + Object", vocab_hint: "ยอมรับ = acknowledge | ความจริง = fact / truth", error_sentence: "She refuses to acknowledging her mistake.", error_wrong: "acknowledging", error_correct: "acknowledge", error_explain: "หลัง refuse to ต้องตามด้วย Infinitive (to + V.1)" },
-      { id: 10, word: "acquire", pos: "verb", meaning: "ได้รับมา, ครอบครอง, เรียนรู้ทักษะ", example_en: "He acquired a reputation as an expert.", example_th: "เขาได้รับชื่อเสียงในฐานะผู้เชี่ยวชาญ", sentence_th: "เด็กๆ ได้รับทักษะทางภาษาอย่างรวดเร็ว", sentence_en: "Children acquire language skills quickly.", sentence_alt: ["Children acquire language skills very fast."], grammar_hint: "Subject (Plural) + V.1 + Noun phrase + Adverb", vocab_hint: "ได้รับ/พัฒนา = acquire | ทักษะภาษา = language skills | รวดเร็ว = quickly", error_sentence: "She want to acquire new computer skills.", error_wrong: "want", error_correct: "wants", error_explain: "ประธาน She เป็นเอกพจน์ กริยา want ต้องเติม -s" }
+    // Built-in Starter Seed: คละหมวดอักษร A ถึง Z ทันที 30 คำ ไม่กระจุกอยู่แค่ตัว A
+    const DIVERSE_SEED = [
+      // หมวด A
+      { id: 1, word: "abandon", pos: "verb", meaning: "ละทิ้ง, ทอดทิ้ง", example_en: "They had to abandon the burning ship.", example_th: "พวกเขาจำต้องละทิ้งเรือที่กำลังลุกไหม้", sentence_th: "เขาต้องละทิ้งความฝันนี้ไปในที่สุด", sentence_en: "He had to abandon this dream in the end.", sentence_alt: [], grammar_hint: "Subject + had to + V.inf", vocab_hint: "ละทิ้ง = abandon", error_sentence: "He had to abandoned this dream in the end.", error_wrong: "abandoned", error_correct: "abandon", error_explain: "หลัง had to กริยาต้องไม่ผัน" },
+      { id: 2, word: "achieve", pos: "verb", meaning: "บรรลุผล, สำเร็จ", example_en: "She worked hard to achieve her goals.", example_th: "เธอทำงานหนักเพื่อบรรลุเป้าหมาย", sentence_th: "คุณสามารถบรรลุเป้าหมายได้หากพยายาม", sentence_en: "You can achieve your goal if you try.", sentence_alt: [], grammar_hint: "can + V.inf", vocab_hint: "บรรลุ = achieve", error_sentence: "He has achieve great success in business.", error_wrong: "achieve", error_correct: "achieved", error_explain: "Present Perfect ต้องใช้ V.3" },
+      // หมวด B
+      { id: 3, word: "barrier", pos: "noun", meaning: "อุปสรรค, สิ่งกีดขวาง", example_en: "Language can be a barrier to communication.", example_th: "ภาษาอาจเป็นอุปสรรคต่อการสื่อสาร", sentence_th: "ความกลัวเป็นอุปสรรคที่ยิ่งใหญ่ที่สุดของคุณ", sentence_en: "Fear is your biggest barrier.", sentence_alt: [], grammar_hint: "Subject + is + possessive + noun", vocab_hint: "อุปสรรค = barrier", error_sentence: "Fear is your biggest barriers in life.", error_wrong: "barriers", error_correct: "barrier", error_explain: "ประธาน Fear เป็นเอกพจน์ คำนามต้องเป็นเอกพจน์" },
+      { id: 4, word: "benefit", pos: "noun", meaning: "ประโยชน์, ผลประโยชน์", example_en: "Exercise has many health benefits.", example_th: "การออกกำลังกายมีประโยชน์ต่อสุขภาพมากมาย", sentence_th: "เทคโนโลยีนี้ให้ประโยชน์มากมายแก่เรา", sentence_en: "This technology gives us many benefits.", sentence_alt: [], grammar_hint: "many + noun plural", vocab_hint: "ประโยชน์ = benefits", error_sentence: "This technology gives us many benefit.", error_wrong: "benefit", error_correct: "benefits", error_explain: "หลัง many คำนามต้องเป็นพหูพจน์ (เติม -s)" },
+      // หมวด C
+      { id: 5, word: "challenge", pos: "noun", meaning: "ความท้าทาย", example_en: "This new project is a big challenge.", example_th: "โครงการใหม่นี้เป็นความท้าทายที่ยิ่งใหญ่", sentence_th: "เราพร้อมที่จะรับความท้าทายใหม่นี้", sentence_en: "We are ready to accept this new challenge.", sentence_alt: [], grammar_hint: "ready to + V.inf", vocab_hint: "ความท้าทาย = challenge", error_sentence: "We are ready to accepting this new challenge.", error_wrong: "accepting", error_correct: "accept", error_explain: "to ตามด้วย V.infinitive" },
+      { id: 6, word: "crucial", pos: "adjective", meaning: "สำคัญยิ่ง, จำเป็นมาก", example_en: "Early detection is crucial for success.", example_th: "การตรวจพบแต่เนิ่นๆ มีความสำคัญอย่างยิ่ง", sentence_th: "การตัดสินใจนี้สำคัญยิ่งต่ออนาคตของเรา", sentence_en: "This decision is crucial for our future.", sentence_alt: [], grammar_hint: "is + adjective + for", vocab_hint: "สำคัญยิ่ง = crucial", error_sentence: "This decision is crucially for our future.", error_wrong: "crucially", error_correct: "crucial", error_explain: "หลัง is ต้องเป็น Adjective" },
+      // หมวด D
+      { id: 7, word: "decade", pos: "noun", meaning: "ทศวรรษ (10 ปี)", example_en: "He lived abroad for a decade.", example_th: "เขาอาศัยอยู่ต่างประเทศเป็นเวลาหนึ่งทศวรรษ", sentence_th: "โลกเปลี่ยนไปมากในทศวรรษที่ผ่านมา", sentence_en: "The world changed a lot in the past decade.", sentence_alt: [], grammar_hint: "in the past + noun", vocab_hint: "ทศวรรษ = decade", error_sentence: "The world changed a lot in the past decades ago.", error_wrong: "past decades ago", error_correct: "past decade", error_explain: "in the past decade ไม่ต้องมี ago" },
+      { id: 8, word: "dramatic", pos: "adjective", meaning: "อย่างเห็นได้ชัด, น่าตื่นเต้น", example_en: "There was a dramatic change in the weather.", example_th: "สภาพอากาศเกิดการเปลี่ยนแปลงอย่างเห็นได้ชัด", sentence_th: "ราคามีการลดลงอย่างเห็นได้ชัด", sentence_en: "There is a dramatic drop in prices.", sentence_alt: [], grammar_hint: "a + adjective + noun", vocab_hint: "อย่างเห็นได้ชัด = dramatic", error_sentence: "There is a dramatically drop in prices.", error_wrong: "dramatically", error_correct: "dramatic", error_explain: "drop เป็นคำนาม ต้องขยายด้วย Adjective" },
+      // หมวด E
+      { id: 9, word: "effort", pos: "noun", meaning: "ความพยายาม", example_en: "You should put more effort into your work.", example_th: "คุณควรทุ่มเทความพยายามให้มากกว่านี้", sentence_th: "ความสำเร็จต้องใช้ความพยายามอย่างมาก", sentence_en: "Success requires a lot of effort.", sentence_alt: [], grammar_hint: "requires + noun", vocab_hint: "ความพยายาม = effort", error_sentence: "Success require a lot of effort.", error_wrong: "require", error_correct: "requires", error_explain: "ประธาน Success เป็นเอกพจน์ กริยาต้องเติม -s" },
+      { id: 10, word: "enhance", pos: "verb", meaning: "เพิ่มพูน, เสริม, ปรับปรุง", example_en: "Good lighting will enhance the room.", example_th: "แสงสว่างที่ดีจะช่วยเสริมให้ห้องดูสวยขึ้น", sentence_th: "การอ่านหนังสือช่วยเพิ่มพูนทักษะของคุณ", sentence_en: "Reading helps enhance your skills.", sentence_alt: [], grammar_hint: "helps + V.inf", vocab_hint: "เพิ่มพูน = enhance", error_sentence: "Reading helps enhancing your skills.", error_wrong: "enhancing", error_correct: "enhance", error_explain: "help ตามด้วย V.infinitive ไม่ผัน" },
+      // หมวด F
+      { id: 11, word: "flexible", pos: "adjective", meaning: "ยืดหยุ่นได้, ปรับเปลี่ยนได้", example_en: "My working hours are very flexible.", example_th: "ชั่วโมงการทำงานของฉันยืดหยุ่นมาก", sentence_th: "เราต้องการแผนงานที่มีความยืดหยุ่น", sentence_en: "We need a flexible plan for this project.", sentence_alt: [], grammar_hint: "a + adjective + noun", vocab_hint: "ยืดหยุ่น = flexible", error_sentence: "We need an flexible plan for this project.", error_wrong: "an flexible", error_correct: "a flexible", error_explain: "flexible ขึ้นต้นด้วยเสียงพยัญชนะ ใช้ a" },
+      // หมวด G
+      { id: 12, word: "generate", pos: "verb", meaning: "สร้างขึ้น, ก่อให้เกิด", example_en: "Solar panels generate electricity.", example_th: "แผงโซลาร์เซลล์ผลิตกระแสไฟฟ้า", sentence_th: "แคมเปญนี้สามารถสร้างรายได้จำนวนมาก", sentence_en: "This campaign can generate high income.", sentence_alt: [], grammar_hint: "can + V.inf", vocab_hint: "สร้าง/ผลิต = generate", error_sentence: "This campaign can generates high income.", error_wrong: "generates", error_correct: "generate", error_explain: "หลัง can กริยาต้องไม่เติม -s" },
+      // หมวด H
+      { id: 13, word: "highlight", pos: "verb", meaning: "เน้นย้ำ, ชี้ให้เห็นจุดสำคัญ", example_en: "The report highlights major economic issues.", example_th: "รายงานเน้นย้ำประเด็นเศรษฐกิจสำคัญ", sentence_th: "เธอต้องการเน้นย้ำข้อผิดพลาดนี้", sentence_en: "She wants to highlight this error.", sentence_alt: [], grammar_hint: "wants to + V.inf", vocab_hint: "เน้นย้ำ = highlight", error_sentence: "She want to highlight this error.", error_wrong: "want", error_correct: "wants", error_explain: "ประธาน She กริยา want ต้องเติม -s" },
+      // หมวด I
+      { id: 14, word: "impact", pos: "noun", meaning: "ผลกระทบ", example_en: "Social media has a huge impact on teens.", example_th: "โซเชียลมีเดียมีผลกระทบอย่างมากต่อวัยรุ่น", sentence_th: "การตัดสินใจของเขามีผลกระทบต่อเราทุกคน", sentence_en: "His decision has an impact on all of us.", sentence_alt: [], grammar_hint: "have an impact on", vocab_hint: "ผลกระทบ = impact", error_sentence: "His decision have an impact on all of us.", error_wrong: "have", error_correct: "has", error_explain: "ประธาน His decision เป็นเอกพจน์ ใช้ has" },
+      // หมวด J
+      { id: 15, word: "justify", pos: "verb", meaning: "ให้เหตุผลสนับสนุน, แสดงความถูกต้อง", example_en: "How can you justify such high costs?", example_th: "คุณจะอธิบายเหตุผลของต้นทุนที่สูงขนาดนี้ได้อย่างไร", sentence_th: "ไม่มีอะไรสามารถสร้างความชอบธรรมให้ความรุนแรงได้", sentence_en: "Nothing can justify violence.", sentence_alt: [], grammar_hint: "can + V.inf", vocab_hint: "ให้เหตุผล = justify", error_sentence: "Nothing can justifies violence.", error_wrong: "justifies", error_correct: "justify", error_explain: "หลัง can ต้องเป็นรูป Infinitive" },
+      // หมวด K
+      { id: 16, word: "knowledge", pos: "noun", meaning: "ความรู้", example_en: "She has extensive knowledge of physics.", example_th: "เธอมีความรู้อย่างกว้างขวางเกี่ยวกับฟิสิกส์", sentence_th: "ความรู้คือกุญแจสู่ความสำเร็จ", sentence_en: "Knowledge is the key to success.", sentence_alt: [], grammar_hint: "is the key to + noun", vocab_hint: "ความรู้ = knowledge", error_sentence: "Knowledges is the key to success.", error_wrong: "Knowledges", error_correct: "Knowledge", error_explain: "knowledge เป็นนามนับไม่ได้ ห้ามเติม -s" },
+      // หมวด L
+      { id: 17, word: "launch", pos: "verb", meaning: "เปิดตัว, ปล่อย (จรวด/สินค้า)", example_en: "The company will launch a new phone tomorrow.", example_th: "บริษัทจะเปิดตัวโทรศัพท์รุ่นใหม่พรุ่งนี้", sentence_th: "พวกเขาเตรียมจะเปิดตัวเว็บไซต์สัปดาห์หน้า", sentence_en: "They will launch the website next week.", sentence_alt: [], grammar_hint: "will + V.inf", vocab_hint: "เปิดตัว = launch", error_sentence: "They will launched the website next week.", error_wrong: "launched", error_correct: "launch", error_explain: "หลัง will กริยาต้องเป็น Infinitive" },
+      // หมวด M
+      { id: 18, word: "maintain", pos: "verb", meaning: "รักษาไว้, ดูแลรักษา", example_en: "It is hard to maintain a high standard.", example_th: "มันยากที่จะรักษามาตรฐานระดับสูงไว้ได้", sentence_th: "คุณควรดูแลรักษารถยนต์ของคุณเป็นประจำ", sentence_en: "You should maintain your car regularly.", sentence_alt: [], grammar_hint: "should + V.inf", vocab_hint: "ดูแลรักษา = maintain", error_sentence: "You should to maintain your car regularly.", error_wrong: "should to maintain", error_correct: "should maintain", error_explain: "หลัง should ห้ามมี to" },
+      // หมวด N
+      { id: 19, word: "neglect", pos: "verb", meaning: "ละเลย, ทอดทิ้งไม่ดูแล", example_en: "Don't neglect your health while working.", example_th: "อย่าละเลยสุขภาพของคุณในขณะทำงาน", sentence_th: "เขาไม่เคยละเลยหน้าที่ของตนเอง", sentence_en: "He never neglects his duty.", sentence_alt: [], grammar_hint: "Subject + never + V(s)", vocab_hint: "ละเลย = neglect", error_sentence: "He never neglect his duty.", error_wrong: "neglect", error_correct: "neglects", error_explain: "ประธาน He กริยาต้องเติม -s" },
+      // หมวด O
+      { id: 20, word: "obtain", pos: "verb", meaning: "ได้รับ, จัดหามาได้", example_en: "You must obtain permission before leaving.", example_th: "คุณต้องได้รับอนุญาตก่อนออกเดินทาง", sentence_th: "เธอพยายามที่จะได้รับข้อมูลที่ถูกต้อง", sentence_en: "She tries to obtain accurate information.", sentence_alt: [], grammar_hint: "tries to + V.inf", vocab_hint: "ได้รับ = obtain", error_sentence: "She tries to obtaining accurate information.", error_wrong: "obtaining", error_correct: "obtain", error_explain: "to ตามด้วย V.infinitive" },
+      // หมวด P
+      { id: 21, word: "potential", pos: "noun", meaning: "ศักยภาพ", example_en: "The student has great potential.", example_th: "นักเรียนคนนี้มีศักยภาพที่ยอดเยี่ยม", sentence_th: "ทุกคนมีศักยภาพในการเรียนรู้สิ่งใหม่", sentence_en: "Everyone has the potential to learn new things.", sentence_alt: [], grammar_hint: "potential to + V.inf", vocab_hint: "ศักยภาพ = potential", error_sentence: "Everyone have the potential to learn.", error_wrong: "have", error_correct: "has", error_explain: "Everyone ถือเป็นเอกพจน์ ใช้ has" },
+      // หมวด Q
+      { id: 22, word: "qualify", pos: "verb", meaning: "มีคุณสมบัติเหมาะสม, ผ่านการคัดเลือก", example_en: "Does he qualify for the discount?", example_th: "เขามีคุณสมบัติได้รับส่วนลดหรือไม่", sentence_th: "เธอมีคุณสมบัติเหมาะสมสำหรับตำแหน่งนี้", sentence_en: "She qualifies for this position.", sentence_alt: [], grammar_hint: "qualify for + noun", vocab_hint: "มีคุณสมบัติ = qualify", error_sentence: "She qualify for this position.", error_wrong: "qualify", error_correct: "qualifies", error_explain: "ประธาน She ผันกริยาลงท้ายด้วย y เปลี่ยนเป็น -ies" },
+      // หมวด R
+      { id: 23, word: "reliable", pos: "adjective", meaning: "เชื่อถือได้, ไว้วางใจได้", example_en: "We need reliable data for our research.", example_th: "เราต้องการข้อมูลที่เชื่อถือได้สำหรับงานวิจัย", sentence_th: "เพื่อนสนิทของฉันเป็นคนน่าเชื่อถือมาก", sentence_en: "My best friend is very reliable.", sentence_alt: [], grammar_hint: "is very + adjective", vocab_hint: "เชื่อถือได้ = reliable", error_sentence: "My best friend is very reliably.", error_wrong: "reliably", error_correct: "reliable", error_explain: "หลัง is very ต้องเป็น Adjective" },
+      // หมวด S
+      { id: 24, word: "significant", pos: "adjective", meaning: "สำคัญ, มีความหมายชัดเจน", example_en: "There is a significant difference between them.", example_th: "มีความแตกต่างที่สำคัญระหว่างสองสิ่งนี้", sentence_th: "โครงการนี้มีความสำคัญอย่างยิ่งต่อเรา", sentence_en: "This project is significant to us.", sentence_alt: [], grammar_hint: "is + adjective + to", vocab_hint: "สำคัญ = significant", error_sentence: "This project is significantly to us.", error_wrong: "significantly", error_correct: "significant", error_explain: "หลัง is ต้องเป็น Adjective" },
+      // หมวด T
+      { id: 25, word: "transform", pos: "verb", meaning: "เปลี่ยนรูป, พลิกโฉม", example_en: "AI will transform modern industries.", example_th: "AI จะพลิกโฉมอุตสาหกรรมสมัยใหม่", sentence_th: "เทคโนโลยีสามารถพลิกโฉมชีวิตของเราได้", sentence_en: "Technology can transform our lives.", sentence_alt: [], grammar_hint: "can + V.inf", vocab_hint: "พลิกโฉม = transform", error_sentence: "Technology can transforms our lives.", error_wrong: "transforms", error_correct: "transform", error_explain: "หลัง can กริยาต้องไม่ผัน" },
+      // หมวด U
+      { id: 26, word: "urgent", pos: "adjective", meaning: "เร่งด่วน, ด่วนมาก", example_en: "I received an urgent message this morning.", example_th: "ฉันได้รับข้อความด่วนเมื่อเช้านี้", sentence_th: "นี่คือเรื่องเร่งด่วนที่ต้องแก้ไขทันที", sentence_en: "This is an urgent matter to solve.", sentence_alt: [], grammar_hint: "an + urgent + noun", vocab_hint: "เร่งด่วน = urgent", error_sentence: "This is a urgent matter to solve.", error_wrong: "a urgent", error_correct: "an urgent", error_explain: "urgent ขึ้นต้นด้วยสระ (ออ) ต้องใช้ an" },
+      // หมวด V
+      { id: 27, word: "vital", pos: "adjective", meaning: "สำคัญยิ่งยวด, ขาดไม่ได้", example_en: "Water is vital for all living things.", example_th: "น้ำมีความสำคัญยิ่งยวดต่อสิ่งมีชีวิตทุกชนิด", sentence_th: "การสื่อสารมีความสำคัญยิ่งยวดในทีม", sentence_en: "Communication is vital in any team.", sentence_alt: [], grammar_hint: "is + vital + in", vocab_hint: "สำคัญยิ่ง = vital", error_sentence: "Communication are vital in any team.", error_wrong: "are", error_correct: "is", error_explain: "Communication เป็นนามนับไม่ได้ ใช้ is" },
+      // หมวด W
+      { id: 28, word: "wealthy", pos: "adjective", meaning: "ร่ำรวย, มั่งคั่ง", example_en: "He was born into a wealthy family.", example_th: "เขาเกิดมาในครอบครัวที่ร่ำรวย", sentence_th: "พวกเขาต้องการเป็นคนที่มีความมั่งคั่ง", sentence_en: "They want to become wealthy.", sentence_alt: [], grammar_hint: "become + adjective", vocab_hint: "มั่งคั่ง = wealthy", error_sentence: "They want to become wealth.", error_wrong: "wealth", error_correct: "wealthy", error_explain: "wealth เป็นคำนาม ต้องใช้คำคุณศัพท์ wealthy" },
+      // หมวด Y
+      { id: 29, word: "yield", pos: "verb", meaning: "ให้ผลผลิต, ยอมจำนน", example_en: "This crop yields a rich harvest.", example_th: "พืชชนิดนี้ให้ผลผลิตที่อุดมสมบูรณ์", sentence_th: "การลงทุนนี้จะให้ผลลัพธ์ที่ดี", sentence_en: "This investment will yield good results.", sentence_alt: [], grammar_hint: "will + V.inf", vocab_hint: "ให้ผลลัพธ์ = yield", error_sentence: "This investment will yields good results.", error_wrong: "yields", error_correct: "yield", error_explain: "หลัง will กริยาต้องไม่เติม -s" },
+      // หมวด Z
+      { id: 30, word: "zone", pos: "noun", meaning: "พื้นที่, บริเวณ, โซน", example_en: "This is a no-parking zone.", example_th: "นี่คือเขตห้ามจอดรถ", sentence_th: "ห้องสมุดเป็นพื้นที่ที่ต้องเงียบสงบ", sentence_en: "The library is a quiet zone.", sentence_alt: [], grammar_hint: "a + adjective + noun", vocab_hint: "พื้นที่ = zone", error_sentence: "The library is an quiet zone.", error_wrong: "an quiet", error_correct: "a quiet", error_explain: "quiet ขึ้นต้นด้วยเสียงพยัญชนะ ใช้ a" }
     ];
 
-    class LoopSRSEngine {
+    class MultiAlphabetSRSEngine {
       constructor() {
-        this.STORAGE_KEY = 'oxford3000_loop_srs_v4';
-        this.STATS_KEY = 'oxford3000_loop_stats_v4';
+        this.STORAGE_KEY = 'oxford3000_multi_alphabet_v5';
+        this.STATS_KEY = 'oxford3000_multi_stats_v5';
         this.stats = this.loadStats();
         this.words = this.loadWords();
       }
@@ -356,7 +407,7 @@
             if (Array.isArray(parsed) && parsed.length > 0) return parsed;
           } catch(e) {}
         }
-        return SEED_DATA.map(w => ({
+        return DIVERSE_SEED.map(w => ({
           ...w,
           srs: { repetitions: 0, nextReviewRound: 1, isNew: true }
         }));
@@ -391,17 +442,17 @@
         let addRounds = 1;
 
         if (rating === 1) {
-          // จำไม่ได้: เจอกันรอบถัดไปทันที (+1 รอบ)
+          // ❌ จำไม่ได้: โผล่มาทันทีในรอบถัดไป (+1 รอบ)
           repetitions = 0;
           addRounds = 1;
         } else if (rating === 3) {
-          // เกือบจำได้: เว้น 2 - 3 รอบ
+          // 🤔 เกือบจำได้: เว้น 3 - 4 รอบ
           repetitions++;
-          addRounds = Math.floor(Math.random() * 2) + 2; 
+          addRounds = Math.floor(Math.random() * 2) + 3; 
         } else if (rating === 5) {
-          // จำได้แม่น: เว้น 6 - 7 รอบ
+          // ✨ จำได้แม่น: ปรับเป็น 9 - 10 รอบตามที่สั่ง
           repetitions++;
-          addRounds = Math.floor(Math.random() * 2) + 6; 
+          addRounds = Math.floor(Math.random() * 2) + 9; 
         }
 
         word.srs = {
@@ -413,37 +464,40 @@
         this.saveWords();
       }
 
-      // ดึง 10 คำ: จัดลำดับให้ "คำใหม่ที่ยังไม่เคยเรียน" ขึ้นมาก่อนเสมอ
+      // ระบบจัดคิวแบบสุ่มคละหมวดอักษร ไม่ติดอยู่ที่ตัว A
       getBatchQueue() {
         const cRound = this.stats.currentRound || 1;
 
-        // 1. คำที่ถึงกำหนดทบทวนในรอบนี้
-        const dueWords = this.words.filter(w => w.srs && !w.srs.isNew && w.srs.nextReviewRound <= cRound);
+        // 1. คำเก่าที่ถึงรอบทวนในรอบนี้
+        let dueWords = this.words.filter(w => w.srs && !w.srs.isNew && w.srs.nextReviewRound <= cRound);
 
-        // 2. คำใหม่ที่ยังไม่เคยเรียนเลย (isNew === true)
-        const newWords = this.words.filter(w => !w.srs || w.srs.isNew);
+        // 2. คำใหม่ที่ยังไม่เคยเรียนเลย
+        let newWords = this.words.filter(w => !w.srs || w.srs.isNew);
 
-        // ให้สิทธิ์คำที่ต้องทวนก่อน แล้วเติมคำใหม่ให้ครบ 10
+        // ทำการ Shuffle สุ่มสลับคำใหม่ทั้งหมดเพื่อคละหมวด A-Z ไม่เรียงตามลำดับเดิม
+        newWords.sort(() => Math.random() - 0.5);
+
         let queue = [...dueWords];
         const neededNew = Math.max(0, 10 - queue.length);
         queue = [...queue, ...newWords.slice(0, neededNew)];
 
-        // 3. ถ้าคำใหม่หมดคลังแล้ว ให้นำคำเก่าที่มีระยะทบทวนใกล้ที่สุดมาทบทวนซ้ำ
+        // 3. หากยังไม่ครบ 10 คำ (คำใหม่หมด) ให้สุ่มคำเก่าที่ยังไม่ถึงรอบมาทบทวนเพิ่ม
         if (queue.length < 10) {
           const remainingNeeded = 10 - queue.length;
-          const remainingOld = this.words
-            .filter(w => !queue.some(q => q.id === w.id))
-            .sort((a, b) => (a.srs?.nextReviewRound || 0) - (b.srs?.nextReviewRound || 0))
-            .slice(0, remainingNeeded);
-          queue = [...queue, ...remainingOld];
+          let remainingOld = this.words.filter(w => !queue.some(q => q.id === w.id));
+          remainingOld.sort(() => Math.random() - 0.5);
+          queue = [...queue, ...remainingOld.slice(0, remainingNeeded)];
         }
 
         if (queue.length === 0) queue = [...this.words];
+
+        // สลับลำดับในชุด 10 คำ เพื่อความสดใหม่ ไม่จำเจ
+        queue.sort(() => Math.random() - 0.5);
         return queue.slice(0, 10);
       }
     }
 
-    const srs = new LoopSRSEngine();
+    const srs = new MultiAlphabetSRSEngine();
     let currentFCIndex = 0;
     let currentFCQueue = [];
     let currentSentenceIndex = 0;
@@ -457,7 +511,6 @@
           if (Array.isArray(list) && list.length > 0) {
             const existingMap = new Map(srs.words.map(w => [w.word.toLowerCase(), w]));
             
-            // นำคำศัพท์จากไฟล์ json มารวม หากเป็นคำใหม่ให้คงสถานะ isNew: true เพื่อให้ถูกดึงมาเรียน
             srs.words = list.map((item, idx) => {
               const cleanWord = (item.word || '').trim();
               if (existingMap.has(cleanWord.toLowerCase())) {
@@ -474,7 +527,7 @@
           }
         }
       } catch (e) {
-        console.log("Using seed or current database");
+        console.log("Using built-in diverse seed");
       }
       updateDashboard();
     }
@@ -484,7 +537,11 @@
         const res = await fetch('./oxford3000.json');
         if (!res.ok) throw new Error();
         const list = await res.json();
-        srs.words = list.map((item, idx) => ({
+        
+        // สุ่มคำศัพท์ตั้งแต่ขั้นตอนโหลด เพื่อให้กระจายทุกตัวอักษร
+        const shuffledList = [...list].sort(() => Math.random() - 0.5);
+
+        srs.words = shuffledList.map((item, idx) => ({
           ...item,
           id: item.id || (idx + 1),
           srs: { repetitions: 0, nextReviewRound: 1, isNew: true }
@@ -493,11 +550,18 @@
         srs.stats.completedBatches = 0;
         srs.saveStats();
         srs.saveWords();
-        alert(`โหลดคำศัพท์จาก oxford3000.json สำเร็จ! ทั้งหมด ${srs.words.length} คำ ระบบจะเริ่มจากคำใหม่อัตโนมัติ`);
+        alert(`โหลดคำศัพท์สำเร็จ ${srs.words.length} คำ! ระบบคละหมวดอักษร A-Z เรียบร้อย`);
         setupFlashcards();
         updateDashboard();
       } catch (err) {
-        alert("ไม่พบไฟล์ oxford3000.json หรือรูปแบบ JSON มีข้อผิดพลาด");
+        alert("ไม่พบไฟล์ oxford3000.json หรือรูปแบบ JSON ไม่ถูกต้อง");
+      }
+    }
+
+    function resetAllProgress() {
+      if (confirm("ต้องการล้างประวัติรอบทั้งหมดและเริ่มสุ่มคำใหม่ใช่หรือไม่?")) {
+        localStorage.clear();
+        location.reload();
       }
     }
 
@@ -556,7 +620,7 @@
       const srsControls = document.getElementById('srsControls');
       const finishControls = document.getElementById('finishSetControls');
 
-      // เมื่อจบ 10 คำของชุดนี้
+      // จบชุด 10 คำ
       if (!currentFCQueue || currentFCQueue.length === 0 || currentFCIndex >= currentFCQueue.length) {
         srs.stats.currentRound = (srs.stats.currentRound || 1) + 1;
         srs.stats.completedBatches = (srs.stats.completedBatches || 0) + 1;
@@ -566,8 +630,8 @@
         document.getElementById('fcWord').innerText = "🎉 ยอดเยี่ยม!";
         document.getElementById('fcPos').innerText = "Batch Complete";
         document.getElementById('fcMeaning').innerText = `จบชุด 10 คำแล้ว! (เข้าสู่รอบที่ ${srs.stats.currentRound})`;
-        document.getElementById('fcExampleEn').innerText = "คำศัพท์ได้รับการจัดคิวตามรอบทบทวนใหม่เรียบร้อย";
-        document.getElementById('fcExampleTh').innerText = "กดปุ่มด้านล่างเพื่อดึง 10 คำถัดไปมาเล่นต่อทันที";
+        document.getElementById('fcExampleEn').innerText = "คำศัพท์ได้รับการจัดคิวตามรอบใหม่เรียบร้อย";
+        document.getElementById('fcExampleTh').innerText = "คำที่จำแม่นจะเว้น 9-10 รอบ | คำจำไม่ได้จะมาในรอบถัดไปทันที";
         document.getElementById('fcProgressText').innerText = `${currentFCQueue.length} / ${currentFCQueue.length}`;
         document.getElementById('fcProgressBar').style.width = '100%';
         
@@ -634,7 +698,7 @@
       }
     }
 
-    // Sentence Writing Controller (สุ่มคำศัพท์จากคลังมาฝึก ไม่ซ้ำคำเดิม)
+    // Sentence Writing Controller (สุ่มประโยคมาฝึก ไม่จำเจ)
     function renderSentence() {
       if (!srs.words || srs.words.length === 0) return;
       const item = srs.words[currentSentenceIndex % srs.words.length];
